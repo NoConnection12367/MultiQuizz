@@ -19,16 +19,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
+  void _login() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+
     });
   }
 
@@ -46,41 +40,73 @@ class _LoginPageState extends State<LoginPage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: Container(
+        padding: const EdgeInsets.all(32.0),
         child: Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Page headline
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 35.0),
+                    child: Text(
+                      'Einloggen',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                  // Username label
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 0.0),
+                    child: Text(
+                      'Benutzername:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  // Username textfield
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 35.0),
+                    child: 
+                      new TextField(
+                        autofocus: true|false,
+                      ),
+                  ),
+                  // Password label
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 0.0),
+                    child: Text(
+                      'Passwort:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  // Password text field
+                  Container(
+                    padding: const EdgeInsets.only(bottom: 25.0),
+                    child: 
+                      new TextField(
+                        autofocus: true|false,
+                        obscureText: true,
+                      ),
+                  ),
+                  // Login button
+                  new ButtonTheme(
+                    minWidth: 200.0, 
+                    child: RaisedButton(
+                      padding: const EdgeInsets.all(8.0),
+                      textColor: Colors.white,
+                      color: Colors.blue,
+                      onPressed: _login,
+                      child: new Text("Einloggen"),
+                    ),
+                  ),
+                ],
+              ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
