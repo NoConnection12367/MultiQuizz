@@ -4,8 +4,9 @@ class User {
     var pwHash;
     var score;
 
-    User()
+    User(String name)
     {
         // db-Aufruf - fill member
+        this.name = name;
     }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'startNewGamePage.dart';
+import '../classes/game.dart';
+import '../classes/user.dart';
 
 class MainMenuPage extends StatelessWidget {
     @override
@@ -114,17 +116,41 @@ class MainMenuPage extends StatelessWidget {
     Widget genOpenGamesListView(){
         // db-Entries aller offenen Spiele mit Namen der Spieler
         
-        List<Game> Games = new List<Game> ();
 
-        for()
+
+        List<Game> openGames = new List<Game>(); // später: get games from db
+        ListView listView = new ListView();
+
+        for(Game game in openGames)
         {
+            // für jedes game -> adde ein listtile            
+            List<String> memberNames = new List<String>();
+
+            for(User member in game.memberList)
+            {
+                memberNames.add(member.name);
+                //ListView listView.add(new ListTile({titel:memberNames}));
+            }
+
 
         }
+
+print(listView);
+
+/*new ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                    return new ListTile(
+                        title: Text(memberNames[index]),
+                    );
+                },
+                itemCount: memberNames.length,
+            );
+*/
+
 
         return new ListView(
             children: <Widget>[
                 ListTile(
-                    leading: Icon(Icons.map),
                     title: Text('Map'),
                 ),
                 ListTile(
