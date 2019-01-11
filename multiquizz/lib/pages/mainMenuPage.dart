@@ -8,7 +8,7 @@ class MainMenuPage extends StatelessWidget {
     Widget build(BuildContext context) {
         return new Scaffold(
             appBar: new AppBar(
-            title: new Text('MultiQuizz'),
+                title: new Text('MultiQuizz'),
             ),
             body:
             new Column(
@@ -75,14 +75,12 @@ class MainMenuPage extends StatelessWidget {
 
                     ),
 
-                    new Row(
+                    /*new Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                            genOpenGamesListView(),
-                        ]
-                    ),
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [genOpenGamesListView()],
+                    ),*/
 
                     new Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -115,9 +113,6 @@ class MainMenuPage extends StatelessWidget {
 
     Widget genOpenGamesListView(){
         // db-Entries aller offenen Spiele mit Namen der Spieler
-        
-
-
         List<Game> openGames = new List<Game>(); // später: get games from db
         ListView listView = new ListView();
 
@@ -129,40 +124,20 @@ class MainMenuPage extends StatelessWidget {
             for(User member in game.memberList)
             {
                 memberNames.add(member.name);
-                //ListView listView.add(new ListTile({titel:memberNames}));
             }
 
-
-        }
-
-print(listView);
-
-/*new ListView.builder(
+            listView = ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                     return new ListTile(
-                        title: Text(memberNames[index]),
+                        title: Text(memberNames[index])
                     );
                 },
                 itemCount: memberNames.length,
             );
-*/
+        }
 
-
-        return new ListView(
-            children: <Widget>[
-                ListTile(
-                    title: Text('Map'),
-                ),
-                ListTile(
-                    leading: Icon(Icons.photo_album),
-                    title: Text('Album'),
-                ),
-                ListTile(
-                    leading: Icon(Icons.phone),
-                    title: Text('Phone'),
-                )
-            ],
-        );
+        return listView;
     }
 
 }
+
