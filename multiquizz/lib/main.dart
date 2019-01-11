@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'loginPage.dart';
+import 'pages/loginPage.dart';
+import 'pages/mainMenuPage.dart';
+
+//snowboris420@gmail.com - Blutwurst1
 
 void main() => runApp(MyApp());
 
@@ -21,7 +24,8 @@ class MyApp extends StatelessWidget {
                 // is not restarted.
                 primarySwatch: Colors.blue,
             ),
-            home: LoginPage(title: 'MultiQuizz - Hauptmenü'),
+            //home: LoginPage(title: 'MultiQuizz - Hauptmenü'),
+            home: MainMenuPage(),
         );
     }
 }
