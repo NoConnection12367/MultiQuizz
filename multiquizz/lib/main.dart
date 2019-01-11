@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
                 // is not restarted.
                 primarySwatch: Colors.blue,
             ),
-            //home: LoginPage(title: 'MultiQuizz - Hauptmenü'),
-            home: MainMenuPage(),
+            home: LoginPage(title: 'MultiQuizz - Hauptmenü'),
+            //home: MainMenuPage(),
         );
     }
 }
