@@ -28,6 +28,9 @@ class _LoginPageState extends State<LoginPage> {
 
     @override
     Widget build(BuildContext context) {
+
+        print("Starting to build login page..");
+
         // This method is rerun every time setState is called, for instance as done
         // by the _incrementCounter method above.
         //
@@ -42,14 +45,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
             body: Container(
                 padding: const EdgeInsets.all(32.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(
                     children: [
                         // Page headline
                         Container(
                             padding: const EdgeInsets.only(bottom: 35.0),
                             child: Text(
-                                'Einloggen',
+                                'Login',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 25,
@@ -60,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                         Container(
                             padding: const EdgeInsets.only(bottom: 0.0),
                             child: Text(
-                                'Benutzername:',
+                                'Username:',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                 ),
@@ -77,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                         Container(
                             padding: const EdgeInsets.only(bottom: 0.0),
                             child: Text(
-                                'Passwort:',
+                                'Password:',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                 ),
@@ -99,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                                 textColor: Colors.white,
                                 color: Colors.blue,
                                 onPressed: _login,
-                                child: new Text("Einloggen"),
+                                child: new Text("Login"),
                             ),
                         ),
                     ],
