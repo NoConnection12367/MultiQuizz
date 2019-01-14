@@ -12,6 +12,6 @@ class Game {
     {
         // db-Aufruf - fill member
 
-        memberList = [new User("Domi"), new User("Moe"), new User("Flo")];
+        //memberList = [new User("Domi"), new User("Moe"), new User("Flo")];
     }
 }
