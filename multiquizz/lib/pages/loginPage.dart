@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController usernameController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-  Color _passwordTextColor = Colors.green;
+  Color _passwordTextColor = Colors.black;
   Color _usernameTextColor = Colors.black;
 
 
@@ -35,9 +35,9 @@ class _LoginPageState extends State<LoginPage> {
 
     // Reset colors
     setState(() {
-          _usernameTextColor = Colors.black;
-          _passwordTextColor = Colors.black;
-        });
+        _usernameTextColor = Colors.black;
+        _passwordTextColor = Colors.black;
+    });
 
     // Get username and password hash
     var username = usernameController.text;
