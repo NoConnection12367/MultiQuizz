@@ -75,12 +75,12 @@ class MainMenuPage extends StatelessWidget {
 
                     ),
 
-                    /*new Row(
+                    new Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [genOpenGamesListView()],
-                    ),*/
+                        children: genOpenGamesListView(),
+                    ),
 
                     new Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +111,7 @@ class MainMenuPage extends StatelessWidget {
         );
     }
 
-    Widget genOpenGamesListView(){
+    List<Widget> genOpenGamesListView(){
         // db-Entries aller offenen Spiele mit Namen der Spieler
         List<Game> openGames = new List<Game>(); // später: get games from db
         ListView listView = new ListView();
@@ -138,6 +138,4 @@ class MainMenuPage extends StatelessWidget {
 
         return listView;
     }
-
 }
-
