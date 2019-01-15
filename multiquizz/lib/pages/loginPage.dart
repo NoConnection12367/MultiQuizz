@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:multiquizz/pages/mainMenuPage.dart';
 import 'dart:convert'; // for the utf8.encode method
+import 'dart:async';
 import '../globals.dart' as globals;
 import '../classes/user.dart';
 
@@ -25,63 +26,63 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  TextEditingController usernameController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
-  Color _passwordTextColor = Colors.black;
-  Color _usernameTextColor = Colors.black;
+    TextEditingController usernameController = new TextEditingController();
+    TextEditingController passwordController = new TextEditingController();
+    Color _passwordTextColor = Colors.black;
+    Color _usernameTextColor = Colors.black;
 
+    Future _login() async {
 
-  Future _login() async {
-
-    // Reset colors
-    setState(() {
-        _usernameTextColor = Colors.black;
-        _passwordTextColor = Colors.black;
-    });
-
-    // Get username and password hash
-    var username = usernameController.text;
-    var password = passwordController.text;
-    List<int> bytes = utf8.encode(password);
-    String hash = sha256.convert(bytes).toString();
-
-    // Database query
-    CollectionReference ref = Firestore.instance.collection('user');
-    QuerySnapshot eventsQuery = await ref
-        .where("Name", isEqualTo: username)
-        .getDocuments();
-
-    if (eventsQuery.documents.length > 0) {
-
-        eventsQuery.documents.forEach((document) {
-            // Check if password is correct
-            if (document["Password"] == hash) {
-                print("Login successful");
-                print(document["Name"]);
-
-                // Set global user, goto menu page
-                globals.activeUser = new User(document["ID"], document["Name"], document["Password"], document["Score"]);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainMenuPage()),
-                );
-
-            }
-            else {
-                print("Wrong password");
-                setState(() {
-                    _passwordTextColor = Colors.red;
-                });
-            }
-        });
-    }
-    else {
-        print("User not found");
+        // Reset colors
         setState(() {
-            _usernameTextColor = Colors.red;
+            _usernameTextColor = Colors.black;
+            _passwordTextColor = Colors.black;
         });
+
+        // Get username and password hash
+        var username = usernameController.text;
+        var password = passwordController.text;
+        List<int> bytes = utf8.encode(password);
+        String hash = sha256.convert(bytes).toString();
+
+        // Database query
+        CollectionReference ref = Firestore.instance.collection('user');
+        QuerySnapshot eventsQuery = await ref
+            .where("Name", isEqualTo: username)
+            .getDocuments();
+
+        if (eventsQuery.documents.length > 0) {
+
+            eventsQuery.documents.forEach((document) async {
+
+                // Check if password is correct
+                if (document["Password"] == hash) {
+                    print("Login successful");
+                    print(document["Name"]);
+
+                    // Set global user, goto menu page
+                    globals.activeUser = await User.getUser(document["ID"]);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainMenuPage()),
+                    );
+
+                }
+                else {
+                    print("Wrong password");
+                    setState(() {
+                        _passwordTextColor = Colors.red;
+                    });
+                }
+            });
+        }
+        else {
+            print("User not found");
+            setState(() {
+                _usernameTextColor = Colors.red;
+            });
+        }
     }
-  }
 
   @override
   Widget build(BuildContext context) {

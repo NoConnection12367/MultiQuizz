@@ -23,4 +23,6 @@ class Game {
         questionList = new List<Question> ();
 
     }
+
+    
 }
