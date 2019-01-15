@@ -79,7 +79,11 @@ class MainMenuPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: genOpenGamesListView(),
+                        children: <Widget>[
+                            new Expanded(
+                                child: genOpenGamesListView()
+                            ),
+                        ],
                     ),
 
                     new Row(
@@ -111,9 +115,11 @@ class MainMenuPage extends StatelessWidget {
         );
     }
 
-    List<Widget> genOpenGamesListView(){
+    Widget genOpenGamesListView(){
         // db-Entries aller offenen Spiele mit Namen der Spieler
         List<Game> openGames = new List<Game>(); // später: get games from db
+        openGames.add(new Game());
+
         ListView listView = new ListView();
 
         for(Game game in openGames)
