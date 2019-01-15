@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
     var id;
-    var name;
+    String name;
     var pwHash;
     var score;
 

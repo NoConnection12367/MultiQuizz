@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'startNewGamePage.dart';
+import 'gamePage.dart';
+import 'statisticsPage.dart';
 import '../classes/game.dart';
 import '../classes/user.dart';
 
@@ -45,9 +47,10 @@ class MainMenuPage extends StatelessWidget {
                                 new Text(
                                 "+ Friends",
                                     style: new TextStyle(fontSize:16.0,
-                                    color: const Color(0xFFffffff),
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: "Roboto")
+                                        color: const Color(0xFFffffff),
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: "Roboto"
+                                    )
                                 ),
                                 onPressed: () {
                                     Navigator.push(
@@ -75,15 +78,8 @@ class MainMenuPage extends StatelessWidget {
 
                     ),
 
-                    new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                            new Expanded(
-                                child: genOpenGamesListView()
-                            ),
-                        ],
+                    new Expanded(
+                        child: genOpenGamesListView(),
                     ),
 
                     new Row(
@@ -104,7 +100,7 @@ class MainMenuPage extends StatelessWidget {
                                 onPressed: () {
                                     Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => StartNewGamePage()),
+                                        MaterialPageRoute(builder: (context) => StatisticsPage()),
                                     );
                                 }
                             )
@@ -116,32 +112,34 @@ class MainMenuPage extends StatelessWidget {
     }
 
     Widget genOpenGamesListView(){
+
         // db-Entries aller offenen Spiele mit Namen der Spieler
-        List<Game> openGames = new List<Game>(); // später: get games from db
-        openGames.add(new Game());
+        List<Game> openGames = new List<Game>();
+        openGames.add(new Game());                  // später: get games from db
 
-        ListView listView = new ListView();
+        return new ListView.builder(
+            itemCount: openGames.length,
+            itemBuilder: (BuildContext cntx, int index) {
 
-        for(Game game in openGames)
-        {
-            // für jedes game -> adde ein listtile            
-            List<String> memberNames = new List<String>();
+                String memberNames = '';
 
-            for(User member in game.memberList)
-            {
-                memberNames.add(member.name);
-            }
-
-            listView = ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                    return new ListTile(
-                        title: Text(memberNames[index])
-                    );
-                },
-                itemCount: memberNames.length,
-            );
-        }
-
-        return listView;
+                for(User member in openGames[index].memberList)
+                {
+                    if (memberNames == '') {
+                      memberNames = member.name;
+                    }
+                    else
+                        memberNames = memberNames + ', ' + member.name;
+                }
+                
+                return new ListTile(
+                    title: Text(memberNames),
+                    onTap: () => Navigator.push(
+                        cntx,
+                        MaterialPageRoute(builder: (cntx) => GamePage(openGames[index].id)),
+                )
+                );
+            },
+        );
     }
 }
