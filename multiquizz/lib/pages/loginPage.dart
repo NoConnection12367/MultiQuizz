@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:crypto/crypto.dart';
+import 'package:multiquizz/classes/game.dart';
 import 'package:multiquizz/pages/mainMenuPage.dart';
 import 'dart:convert'; // for the utf8.encode method
 import 'dart:async';
@@ -46,41 +47,42 @@ class _LoginPageState extends State<LoginPage> {
         String hash = sha256.convert(bytes).toString();
 
         // Database query
-        CollectionReference ref = Firestore.instance.collection('user');
-        QuerySnapshot eventsQuery = await ref
-            .where("Name", isEqualTo: username)
-            .getDocuments();
+        DatabaseReference userRef = FirebaseDatabase.instance.reference().child('User');
 
-        if (eventsQuery.documents.length > 0) {
+        DataSnapshot snapshot = await userRef.reference().once();
 
-            eventsQuery.documents.forEach((document) async {
+        if (snapshot != null) {
 
-                // Check if password is correct
-                if (document["Password"] == hash) {
-                    print("Login successful");
-                    print(document["Name"]);
+            for (var user in snapshot.value)
+            {
+                if (user != null) {
 
-                    // Set global user, goto menu page
-                    globals.activeUser = await User.getUser(document["ID"]);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MainMenuPage()),
-                    );
+                    if (user["Username"] == username) {
 
+                        // Check if password is correct
+                        if (user["PwHash"] == hash) {
+                            print("Login successful");
+                            print(user["Username"]);
+
+                            // Set global user, goto menu page
+                            var test = user["ID"];
+                            globals.activeUser = await User.getUser(test);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MainMenuPage()),
+                            );
+
+                        }
+                        else {
+                            print("Wrong password");
+                            setState(() {
+                                _passwordTextColor = Colors.red;
+                                _usernameTextColor = Colors.red;
+                            });
+                        }
+                    }
                 }
-                else {
-                    print("Wrong password");
-                    setState(() {
-                        _passwordTextColor = Colors.red;
-                    });
-                }
-            });
-        }
-        else {
-            print("User not found");
-            setState(() {
-                _usernameTextColor = Colors.red;
-            });
+            }
         }
     }
 

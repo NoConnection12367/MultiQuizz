@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class User {
-    var id;
-    String name;
+    int id;
+    var name;
     var pwHash;
-    var score;
+    int score;
 
     User(int id, String name, String password, int score)
     {
@@ -15,19 +15,20 @@ class User {
         this.score = score;
     }
 
+    User.fromSnapshot(DataSnapshot snapshot) {
+        this.id = int.parse(snapshot.key);
+        this.name = snapshot.value["Name"];
+        this.pwHash = snapshot.value["PwHash"];
+        this.score = snapshot.value["Score"];
+    }
+
     static Future<User> getUser(int id) async {
 
         // Get user with given ID from database
-        CollectionReference ref = Firestore.instance.collection('user');
-        QuerySnapshot eventsQuery = await ref
-            .where("ID", isEqualTo: id)
-            .getDocuments();
+        DatabaseReference userRef = FirebaseDatabase.instance.reference().child('User');
 
-        eventsQuery.documents.forEach((document) {
-            return new User(document["ID"], document["Name"], document["Password"], document["Score"]);
-        });
-
-        return null;
+        DataSnapshot snapshot = await userRef.reference().child(id.toString()).once();
+        return new User.fromSnapshot(snapshot);
     }
 
 }
