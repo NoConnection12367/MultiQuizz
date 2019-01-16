@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class GamePage extends StatelessWidget {
 
-    int gameID;
+    String gameID;
 
-    GamePage(int gameID)
+    GamePage(String gameID)
     {
         this.gameID = gameID;
     }
