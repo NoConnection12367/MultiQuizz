@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'pages/loginPage.dart';
 import 'pages/mainMenuPage.dart';
-
 //snowboris420@gmail.com - Blutwurst1
+
 
 void main() => runApp(MyApp());
 
