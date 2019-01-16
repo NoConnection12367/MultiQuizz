@@ -6,6 +6,8 @@ import 'statisticsPage.dart';
 import '../classes/game.dart';
 import '../classes/user.dart';
 
+import 'questionPage.dart';
+
 class MainMenuPage extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class MainMenuPage extends StatelessWidget {
                             )*/
                     new Container(
                         padding: EdgeInsets.only(top: 20.0, left: 15.0),
-                        child: Text("Offene Spiele",
+                        child: Text("Open Games",
                                 style: new TextStyle(fontSize: 20.0,
                                     color: const Color(0xFF000000),
                                     fontWeight: FontWeight.w400,
@@ -68,7 +70,7 @@ class MainMenuPage extends StatelessWidget {
 
                     new Container(
                         padding: EdgeInsets.only(top: 20.0, left: 15.0),
-                        child: Text("Beendete Spiele",
+                        child: Text("Finished Games",
                                 style: new TextStyle(fontSize: 20.0,
                                     color: const Color(0xFF000000),
                                     fontWeight: FontWeight.w400,
@@ -86,7 +88,7 @@ class MainMenuPage extends StatelessWidget {
                             color: const Color(0xFF0099ed),
                             child:
                                 new Text(
-                                "Stats",
+                                "Statistics",
                                     style: new TextStyle(fontSize:16.0,
                                     color: const Color(0xFFffffff),
                                     fontWeight: FontWeight.w500,
@@ -95,7 +97,9 @@ class MainMenuPage extends StatelessWidget {
                                 onPressed: () {
                                     Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => StatisticsPage()),
+                                        //MaterialPageRoute(builder: (context) => StatisticsPage()),
+                                        MaterialPageRoute(builder: (context) => QuestionPage()),
+
                                     );
                                 }
                             ),
