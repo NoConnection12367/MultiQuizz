@@ -102,10 +102,11 @@ class _QuestionPageState extends State<QuestionPage> {
                                 child: Container(
                                     padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
                                     child: Container(
+                                        padding: const EdgeInsets.all(5),
                                         height: 100,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            color: Colors.orange[100],
+                                            color: Color.fromRGBO(60,60,60, 1),
                                         ),
                                         child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -113,16 +114,14 @@ class _QuestionPageState extends State<QuestionPage> {
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: <Widget>[
                                                 Expanded(
-                                                    child: Container(
-                                                        padding: const EdgeInsets.all(5),
-                                                        child: Text(
-                                                            "Frage 1 örklmweklrm fgölwkermg wölekrmö",
-                                                            textAlign: TextAlign.center,
-                                                            style: TextStyle(
-                                                                fontSize: 18.0
-                                                            ),
-                                                        ),
-                                                    )
+													child: Text(
+														"Frage 1 örklmweklrm fgölwkermg wölekrmö",
+														textAlign: TextAlign.center,
+														style: TextStyle(
+															fontSize: 18.0,
+															color: Colors.white
+														),
+													),
                                                 ),
                                             ],
                                         )
@@ -137,7 +136,7 @@ class _QuestionPageState extends State<QuestionPage> {
                                         height: 100,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            color: Colors.orange[100],
+                                            color: Color.fromRGBO(60,60,60, 1),
                                         ),
                                         child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -145,12 +144,13 @@ class _QuestionPageState extends State<QuestionPage> {
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: <Widget>[
                                                 Expanded(
-                                                    child: Text(
-                                                        "Frage 1 örklmweklrm fgölwkermg wölekrmö",
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            fontSize: 18.0
-                                                        ),
+													child: Text(
+														"Frage 1 örklmweklrm fgölwkermg wölekrmö",
+														textAlign: TextAlign.center,
+														style: TextStyle(
+															fontSize: 18.0,
+															color: Colors.white
+														),
                                                     ),
                                                 ),
                                             ],
@@ -173,7 +173,7 @@ class _QuestionPageState extends State<QuestionPage> {
                                         height: 100,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            color: Colors.orange[100],
+                                            color: Color.fromRGBO(60,60,60, 1),
                                         ),
                                         child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -181,12 +181,13 @@ class _QuestionPageState extends State<QuestionPage> {
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: <Widget>[
                                                 Expanded(
-                                                    child: Text(
-                                                        "Frage 1 örklmweklrm fgölwkermg wölekrmö",
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            fontSize: 18.0
-                                                        ),
+													child: Text(
+														"Frage 1 örklmweklrm fgölwkermg wölekrmö",
+														textAlign: TextAlign.center,
+														style: TextStyle(
+															fontSize: 18.0,
+															color: Colors.white
+														),
                                                     ),
                                                 ),
                                             ],
@@ -202,7 +203,7 @@ class _QuestionPageState extends State<QuestionPage> {
                                         height: 100,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            color: Colors.orange[100],
+                                            color: Color.fromRGBO(60,60,60, 1),
                                         ),
                                         child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -210,12 +211,13 @@ class _QuestionPageState extends State<QuestionPage> {
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: <Widget>[
                                                 Expanded(
-                                                    child: Text(
-                                                        "Frage 1 örklmweklrm fgölwkermg wölekrmö",
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(
-                                                            fontSize: 18.0
-                                                        ),
+													child: Text(
+														"Frage 1 örklmweklrm fgölwkermg wölekrmö",
+														textAlign: TextAlign.center,
+														style: TextStyle(
+															fontSize: 18.0,
+															color: Colors.white
+														),
                                                     ),
                                                 ),
                                             ],
