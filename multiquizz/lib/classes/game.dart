@@ -7,7 +7,7 @@ import 'question.dart';
 import '../globals.dart' as globals;
 
 class Game {
-    String id;
+    int id;
     var startTime;
     var endTime;
     User creator;
@@ -21,7 +21,7 @@ class Game {
     static Future<Game> fromSnapshot(DataSnapshot snapshot) async {
         // Init properties
         var game = new Game();
-        game.id = snapshot.key;
+        game.id = int.parse(snapshot.key);
         game.startTime = DateTime.parse(snapshot.value['StartDate']);
         game.endTime = DateTime.parse(snapshot.value['EndDate']);
         game.creator = await User.getUser(snapshot.value["CreatorID"]);
