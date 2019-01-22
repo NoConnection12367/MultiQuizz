@@ -26,7 +26,11 @@ class QuestionPage extends StatefulWidget {
 
 class _QuestionPageState extends State<QuestionPage> {
 
+    Game game;
+
 	_QuestionPageState(Game game){
+
+        this.game = game;
 
 		//List<Question> questionList = game.questionList;
 	}
@@ -70,8 +74,8 @@ class _QuestionPageState extends State<QuestionPage> {
                                         height: 200,
 										decoration: BoxDecoration(
 											border: Border.all(width: 1),
-											borderRadius: BorderRadius.all(Radius.circular(10)),
-											color: Color.fromARGB(100, 0, 0, 150)
+											borderRadius: BorderRadius.all(Radius.circular(15)),
+											color: Color.fromARGB(30, 0, 0, 255)
 										), 
                                         child: Row(
                                             children: <Widget>[
@@ -299,7 +303,9 @@ class _QuestionPageState extends State<QuestionPage> {
     }
 
     void getAnswer(){
+        _timmy.cancel();
 
+        game.questionList[];
     }
 
     void showTrueAnswer(){

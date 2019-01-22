@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.blue,
             ),
             home: LoginPage(title: 'MultiQuizz - Hauptmenü'),
-            //home: MainMenuPage(),
         );
     }
 }
