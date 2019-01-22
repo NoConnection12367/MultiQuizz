@@ -1,11 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import '../classes/game.dart';
+import '../classes/question.dart';
+
 
 class QuestionPage extends StatefulWidget {
-    QuestionPage({Key key}) : super(key: key);
+
+	Game game;
+
+    QuestionPage({Key key, Game game}) : super(key: key);
 
     @override
-    _QuestionPageState createState() => _QuestionPageState();
+    _QuestionPageState createState() => _QuestionPageState(game);
 
     // wenn frage beantwortet -> rekursiv aufrufen, id + 1 bis id = 10
     
@@ -19,10 +26,21 @@ class QuestionPage extends StatefulWidget {
 
 class _QuestionPageState extends State<QuestionPage> {
 
+	_QuestionPageState(Game game){
+		Game.getGame(1);
+
+		List<Question> questionList = game.questionList;
+	}
+
+	double _progress = 1;
     int _counter = 30;
     Timer _timmy;
+	
+	
+	List<Color> buttonColors = [Color.fromRGBO(150,150,150, 1), Color.fromRGBO(60,60,60, 1)];
+	List<Color> falseAnswerColor = [Colors.red, Colors.red];
 
-    Color _countdownColor = Colors.grey[200];
+    Color _countdownColor = Colors.green;
 
     @override
     Widget build(BuildContext context) {
@@ -51,7 +69,11 @@ class _QuestionPageState extends State<QuestionPage> {
                                     child: Container(
                                         padding: const EdgeInsets.only(left: 15, right: 15),
                                         height: 200,
-                                        color: Colors.orange[300],
+										decoration: BoxDecoration(
+											border: Border.all(width: 1),
+											borderRadius: BorderRadius.all(Radius.circular(10)),
+											color: Color.fromARGB(100, 0, 0, 150)
+										), 
                                         child: Row(
                                             children: <Widget>[
                                                 Expanded(
@@ -75,7 +97,20 @@ class _QuestionPageState extends State<QuestionPage> {
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                            Container(
+                            
+							LinearPercentIndicator(
+								width: MediaQuery.of(context).size.width - 50,
+								lineHeight: 20.0,
+								percent: _progress,
+								center: Text(_counter.toString()),
+								linearStrokeCap: LinearStrokeCap.roundAll,
+								progressColor: _countdownColor,
+							),
+							
+							
+							
+							
+							/*Container(
                                 width: 150,
                                 padding: const EdgeInsets.all(15),
                                 decoration: BoxDecoration(
@@ -90,7 +125,7 @@ class _QuestionPageState extends State<QuestionPage> {
                                     ),
                                     textAlign: TextAlign.center,
                                 ),
-                            )
+                            )*/
                         ],
                     ),
                     Row(
@@ -102,29 +137,30 @@ class _QuestionPageState extends State<QuestionPage> {
                                 child: Container(
                                     padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
                                     child: Container(
-                                        padding: const EdgeInsets.all(5),
                                         height: 100,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            color: Color.fromRGBO(60,60,60, 1),
-                                        ),
-                                        child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                                Expanded(
-													child: Text(
-														"Frage 1 örklmweklrm fgölwkermg wölekrmö",
-														textAlign: TextAlign.center,
-														style: TextStyle(
-															fontSize: 18.0,
-															color: Colors.white
-														),
-													),
-                                                ),
-                                            ],
-                                        )
+                                        borderRadius: BorderRadius.all(Radius.circular(5)),
+											gradient: LinearGradient(
+												begin: Alignment.topCenter,
+												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
+												colors: buttonColors, // whitish to gray
+												tileMode: TileMode.repeated, // repeats the gradient over the canvas
+											),
+										),
+                                        child: RaisedButton(
+											color: const Color.fromARGB(0, 255, 255, 255),
+											child: Text(
+												"Antwort 1 örklm",
+												textAlign: TextAlign.center,
+												style: TextStyle(
+													fontSize: 18.0,
+													color: Colors.white
+												),
+											),
+											onPressed: (){
+												
+											},
+										)		
                                     )
                                 ),
                             ),
@@ -132,29 +168,30 @@ class _QuestionPageState extends State<QuestionPage> {
                                 child: Container(
                                     padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
                                     child: Container(
-                                        padding: const EdgeInsets.all(5),
                                         height: 100,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            color: Color.fromRGBO(60,60,60, 1),
-                                        ),
-                                        child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                                Expanded(
-													child: Text(
-														"Frage 1 örklmweklrm fgölwkermg wölekrmö",
-														textAlign: TextAlign.center,
-														style: TextStyle(
-															fontSize: 18.0,
-															color: Colors.white
-														),
-                                                    ),
-                                                ),
-                                            ],
-                                        )
+                                        borderRadius: BorderRadius.all(Radius.circular(5)),
+											gradient: LinearGradient(
+												begin: Alignment.topCenter,
+												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
+												colors: buttonColors, // whitish to gray
+												tileMode: TileMode.repeated, // repeats the gradient over the canvas
+											),
+										),
+                                        child: RaisedButton(
+											color: const Color.fromARGB(0, 255, 255, 255),
+											child: Text(
+												"Antwort 2 kjdfs jklasdlfkj ",
+												textAlign: TextAlign.center,
+												style: TextStyle(
+													fontSize: 18.0,
+													color: Colors.white
+												),
+											),
+											onPressed: (){
+												
+											},
+										)		
                                     )
                                 ),
                             ),
@@ -169,29 +206,30 @@ class _QuestionPageState extends State<QuestionPage> {
                                 child: Container(
                                     padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
                                     child: Container(
-                                        padding: const EdgeInsets.all(5),
                                         height: 100,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            color: Color.fromRGBO(60,60,60, 1),
-                                        ),
-                                        child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                                Expanded(
-													child: Text(
-														"Frage 1 örklmweklrm fgölwkermg wölekrmö",
-														textAlign: TextAlign.center,
-														style: TextStyle(
-															fontSize: 18.0,
-															color: Colors.white
-														),
-                                                    ),
-                                                ),
-                                            ],
-                                        )
+                                        borderRadius: BorderRadius.all(Radius.circular(5)),
+											gradient: LinearGradient(
+												begin: Alignment.topCenter,
+												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
+												colors: buttonColors, // whitish to gray
+												tileMode: TileMode.repeated, // repeats the gradient over the canvas
+											),
+										),
+                                        child: RaisedButton(
+											color: const Color.fromARGB(0, 255, 255, 255),
+											child: Text(
+												"Antwort 3 örka sdfa lm",
+												textAlign: TextAlign.center,
+												style: TextStyle(
+													fontSize: 18.0,
+													color: Colors.white
+												),
+											),
+											onPressed: (){
+												
+											},
+										)		
                                     )
                                 ),
                             ),
@@ -199,29 +237,30 @@ class _QuestionPageState extends State<QuestionPage> {
                                 child: Container(
                                     padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
                                     child: Container(
-                                        padding: const EdgeInsets.all(5),
                                         height: 100,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            color: Color.fromRGBO(60,60,60, 1),
-                                        ),
-                                        child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                                Expanded(
-													child: Text(
-														"Frage 1 örklmweklrm fgölwkermg wölekrmö",
-														textAlign: TextAlign.center,
-														style: TextStyle(
-															fontSize: 18.0,
-															color: Colors.white
-														),
-                                                    ),
-                                                ),
-                                            ],
-                                        )
+                                        	borderRadius: BorderRadius.all(Radius.circular(5)),
+											gradient: LinearGradient(
+												begin: Alignment.topCenter,
+												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
+												colors: buttonColors, // whitish to gray
+												tileMode: TileMode.repeated, // repeats the gradient over the canvas
+											),
+										),
+                                        child: RaisedButton(
+											color: const Color.fromARGB(0, 255, 255, 255),
+											child: Text(
+												"Antwort 4 örklm",
+												textAlign: TextAlign.center,
+												style: TextStyle(
+													fontSize: 18.0,
+													color: Colors.white
+												),
+											),
+											onPressed: (){
+												
+											},
+										)		
                                     )
                                 ),
                             ),
@@ -239,14 +278,21 @@ class _QuestionPageState extends State<QuestionPage> {
 
         setState(() {
 
-            if (_counter > 0) 
-              _counter--;
+            if (_counter > 0)
+			{
+				_counter--;
+				_progress = _counter / 30;
+			}
+              
             
             else
                 _countdownColor = Color.fromARGB(255, 255, 0, 0);
             
         });
     }
+
+
+
 }
 
 
