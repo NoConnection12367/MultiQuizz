@@ -95,12 +95,8 @@ class MainMenuPage extends StatelessWidget {
                                     fontFamily: "Roboto")
                                 ),
                                 onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        //MaterialPageRoute(builder: (context) => StatisticsPage()),
-                                        MaterialPageRoute(builder: (context) => QuestionPage()),
-
-                                    );
+                                    initQuestionPage(context);
+                                    
                                 }
                             ),
                         ),
@@ -110,6 +106,18 @@ class MainMenuPage extends StatelessWidget {
             ),
         );
     }
+
+    void initQuestionPage(context) async
+    {
+        Game game = await Game.getGame(1);
+
+        Navigator.push(
+            context,
+            //MaterialPageRoute(builder: (context) => StatisticsPage()),
+            MaterialPageRoute(builder: (context) => QuestionPage(game: game)),
+
+        );
+}
 
     Widget genOpenGamesListView(){
 

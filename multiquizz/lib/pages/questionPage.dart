@@ -27,9 +27,8 @@ class QuestionPage extends StatefulWidget {
 class _QuestionPageState extends State<QuestionPage> {
 
 	_QuestionPageState(Game game){
-		Game.getGame(1);
 
-		List<Question> questionList = game.questionList;
+		//List<Question> questionList = game.questionList;
 	}
 
 	double _progress = 1;
@@ -158,7 +157,8 @@ class _QuestionPageState extends State<QuestionPage> {
 												),
 											),
 											onPressed: (){
-												
+                                                // übergeben gegebene Antworttext
+												getAnswer();
 											},
 										)		
                                     )
@@ -189,7 +189,8 @@ class _QuestionPageState extends State<QuestionPage> {
 												),
 											),
 											onPressed: (){
-												
+                                                // übergeben gegebene Antworttext
+												getAnswer();
 											},
 										)		
                                     )
@@ -227,7 +228,8 @@ class _QuestionPageState extends State<QuestionPage> {
 												),
 											),
 											onPressed: (){
-												
+                                                // übergeben gegebene Antworttext
+												getAnswer();
 											},
 										)		
                                     )
@@ -258,7 +260,8 @@ class _QuestionPageState extends State<QuestionPage> {
 												),
 											),
 											onPressed: (){
-												
+                                                // übergeben gegebene Antworttext
+												getAnswer();
 											},
 										)		
                                     )
@@ -286,12 +289,26 @@ class _QuestionPageState extends State<QuestionPage> {
               
             
             else
+            {
                 _countdownColor = Color.fromARGB(255, 255, 0, 0);
+                showTrueAnswer();
+            }
+                
             
         });
     }
 
+    void getAnswer(){
 
+    }
+
+    void showTrueAnswer(){
+        // richtige Antwort grün blinken lassen
+    }
+
+    void markWrongAnswer(){
+        // falsch gegebene Antwort rot färben
+    }
 
 }
 
