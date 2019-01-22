@@ -128,7 +128,7 @@ class _MainMenuPage extends State<MainMenuPage> {
         Navigator.push(
             context,
             //MaterialPageRoute(builder: (context) => StatisticsPage()),
-            MaterialPageRoute(builder: (context) => QuestionPage(game: game)),
+            MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: 0, correctAnswerCount: 0,)),
 
         );
 }

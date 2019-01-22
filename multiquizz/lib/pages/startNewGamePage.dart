@@ -122,7 +122,7 @@ class _StartNewGamePage extends State<StartNewGamePage> {
         // Launch questionpages
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => QuestionPage(game: newGame)),
+            MaterialPageRoute(builder: (context) => QuestionPage(game: newGame, questionID: 0, correctAnswerCount: 0,)),
         );
     }
 

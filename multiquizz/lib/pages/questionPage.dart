@@ -3,16 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../classes/game.dart';
 import '../classes/question.dart';
+import 'package:html_unescape/html_unescape.dart';
 
 
 class QuestionPage extends StatefulWidget {
 
 	Game game;
+    int questionID;
+    int correctAnswerCount;
 
-    QuestionPage({Key key, Game game}) : super(key: key);
+    QuestionPage({Key key, Game game, int questionID, int correctAnswerCount}) : super(key: key)
+     {
+         this.game = game;
+         this.questionID = questionID;
+         this.correctAnswerCount = correctAnswerCount;
+     }
 
     @override
-    _QuestionPageState createState() => _QuestionPageState(game);
+    _QuestionPageState createState() => _QuestionPageState(game, questionID, correctAnswerCount);
 
     // wenn frage beantwortet -> rekursiv aufrufen, id + 1 bis id = 10
     
@@ -27,10 +35,14 @@ class QuestionPage extends StatefulWidget {
 class _QuestionPageState extends State<QuestionPage> {
 
     Game game;
+    int questionID;
+    int correctAnswerCount;
 
-	_QuestionPageState(Game game){
+	_QuestionPageState(Game game, int questionID, int correctAnswerCount){
 
         this.game = game;
+        this.questionID = questionID;
+        this.correctAnswerCount = correctAnswerCount;
 
 		//List<Question> questionList = game.questionList;
 	}
@@ -39,16 +51,32 @@ class _QuestionPageState extends State<QuestionPage> {
     int _counter = 30;
     Timer _timmy;
 	
-	
-	List<Color> buttonColors = [Color.fromRGBO(150,150,150, 1), Color.fromRGBO(60,60,60, 1)];
-	List<Color> falseAnswerColor = [Colors.red, Colors.red];
+    static List<Color> buttonColor1 = [Color.fromRGBO(150,150,150, 1), Color.fromRGBO(60,60,60, 1)];
+    static List<Color> buttonColor2 = [Color.fromRGBO(150,150,150, 1), Color.fromRGBO(60,60,60, 1)];
+    static List<Color> buttonColor3 = [Color.fromRGBO(150,150,150, 1), Color.fromRGBO(60,60,60, 1)];
+    static List<Color> buttonColor4 = [Color.fromRGBO(150,150,150, 1), Color.fromRGBO(60,60,60, 1)];
+
+	List<List<Color>> buttonColors = [buttonColor1, buttonColor2, buttonColor3, buttonColor4];
 
     Color _countdownColor = Colors.green;
 
     @override
     Widget build(BuildContext context) {
 
-        _timmy = new Timer(Duration(seconds: 1), _countdown);    
+        if(_timmy == null || _timmy.isActive != true)
+        {
+            _timmy = new Timer(Duration(seconds: 1), _countdown);
+        }
+        else
+            _timmy.cancel();
+        
+        var unescape = new HtmlUnescape();
+        String questionText = unescape.convert(game.questionList[questionID].questionText);
+        String answer1 = game.questionList[questionID].answers[0];
+        String answer2 = game.questionList[questionID].answers[1];
+        String answer3 = game.questionList[questionID].answers[2];
+        String answer4 = game.questionList[questionID].answers[3];
+
 
         return Scaffold(
             appBar: AppBar(
@@ -81,7 +109,7 @@ class _QuestionPageState extends State<QuestionPage> {
                                             children: <Widget>[
                                                 Expanded(
                                                     child: Text(
-                                                        "FRAGE asdöfkl asdlöfjk asdflkj asödfjla söldfj alsdöjf a sdf asdf asdf?",
+                                                        questionText,
                                                         style: TextStyle(
                                                             fontSize: 22.0
                                                         ),
@@ -146,14 +174,14 @@ class _QuestionPageState extends State<QuestionPage> {
 											gradient: LinearGradient(
 												begin: Alignment.topCenter,
 												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
-												colors: buttonColors, // whitish to gray
+												colors: buttonColors[0], // whitish to gray
 												tileMode: TileMode.repeated, // repeats the gradient over the canvas
 											),
 										),
                                         child: RaisedButton(
 											color: const Color.fromARGB(0, 255, 255, 255),
 											child: Text(
-												"Antwort 1 örklm",
+												answer1,
 												textAlign: TextAlign.center,
 												style: TextStyle(
 													fontSize: 18.0,
@@ -162,7 +190,7 @@ class _QuestionPageState extends State<QuestionPage> {
 											),
 											onPressed: (){
                                                 // übergeben gegebene Antworttext
-												getAnswer();
+												getAnswer(answer1, 0);
 											},
 										)		
                                     )
@@ -178,14 +206,14 @@ class _QuestionPageState extends State<QuestionPage> {
 											gradient: LinearGradient(
 												begin: Alignment.topCenter,
 												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
-												colors: buttonColors, // whitish to gray
+												colors: buttonColors[1], // whitish to gray
 												tileMode: TileMode.repeated, // repeats the gradient over the canvas
 											),
 										),
                                         child: RaisedButton(
 											color: const Color.fromARGB(0, 255, 255, 255),
 											child: Text(
-												"Antwort 2 kjdfs jklasdlfkj ",
+												answer2,
 												textAlign: TextAlign.center,
 												style: TextStyle(
 													fontSize: 18.0,
@@ -194,7 +222,7 @@ class _QuestionPageState extends State<QuestionPage> {
 											),
 											onPressed: (){
                                                 // übergeben gegebene Antworttext
-												getAnswer();
+												getAnswer(answer2, 1);
 											},
 										)		
                                     )
@@ -217,14 +245,14 @@ class _QuestionPageState extends State<QuestionPage> {
 											gradient: LinearGradient(
 												begin: Alignment.topCenter,
 												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
-												colors: buttonColors, // whitish to gray
+												colors: buttonColors[2], // whitish to gray
 												tileMode: TileMode.repeated, // repeats the gradient over the canvas
 											),
 										),
                                         child: RaisedButton(
 											color: const Color.fromARGB(0, 255, 255, 255),
 											child: Text(
-												"Antwort 3 örka sdfa lm",
+												answer3,
 												textAlign: TextAlign.center,
 												style: TextStyle(
 													fontSize: 18.0,
@@ -233,7 +261,7 @@ class _QuestionPageState extends State<QuestionPage> {
 											),
 											onPressed: (){
                                                 // übergeben gegebene Antworttext
-												getAnswer();
+												getAnswer(answer3, 2);
 											},
 										)		
                                     )
@@ -249,14 +277,14 @@ class _QuestionPageState extends State<QuestionPage> {
 											gradient: LinearGradient(
 												begin: Alignment.topCenter,
 												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
-												colors: buttonColors, // whitish to gray
+												colors: buttonColors[3], // whitish to gray
 												tileMode: TileMode.repeated, // repeats the gradient over the canvas
 											),
 										),
                                         child: RaisedButton(
 											color: const Color.fromARGB(0, 255, 255, 255),
 											child: Text(
-												"Antwort 4 örklm",
+												answer4,
 												textAlign: TextAlign.center,
 												style: TextStyle(
 													fontSize: 18.0,
@@ -265,7 +293,7 @@ class _QuestionPageState extends State<QuestionPage> {
 											),
 											onPressed: (){
                                                 // übergeben gegebene Antworttext
-												getAnswer();
+												getAnswer(answer4, 3);
 											},
 										)		
                                     )
@@ -295,25 +323,69 @@ class _QuestionPageState extends State<QuestionPage> {
             else
             {
                 _countdownColor = Color.fromARGB(255, 255, 0, 0);
-                showTrueAnswer();
             }
                 
-            
         });
     }
 
-    void getAnswer(){
-        _timmy.cancel();
+    void getAnswer(String givenAnswer, int givenAnswerID){
 
-        game.questionList[];
+        if (_timmy.isActive == true) {
+
+            if (givenAnswer == game.questionList[questionID].correctAnswer) {
+                // correctAnswerResponse
+                rightAnswer(givenAnswerID);
+
+                if (questionID < 10) {
+                    Navigator.push(
+                        context,
+                        //MaterialPageRoute(builder: (context) => StatisticsPage()),
+                        MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: questionID + 1, correctAnswerCount: correctAnswerCount + 1,)),
+
+                    );
+                }
+            } 
+            
+            else {
+                wrongAnswer(givenAnswerID);
+                
+                if (questionID < 10) {
+                    Navigator.push(
+                        context,
+                        //MaterialPageRoute(builder: (context) => StatisticsPage()),
+                        MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: questionID + 1, correctAnswerCount: correctAnswerCount,)),
+
+                    );
+                }
+            }
+        }
     }
 
-    void showTrueAnswer(){
+    void rightAnswer(int givenAnswerID){
         // richtige Antwort grün blinken lassen
+        setState(() {
+            buttonColors[givenAnswerID] = [Colors.green, Colors.green];
+        });
+        
     }
 
-    void markWrongAnswer(){
+    void wrongAnswer(int givenAnswerID){
         // falsch gegebene Antwort rot färben
+        int correctAnswerID;
+
+        for(int i = 0; i < 3; i++){
+            if (game.questionList[questionID].correctAnswer == game.questionList[questionID].answers[i]) {
+                correctAnswerID = i;
+                break;
+            }
+        }
+
+        setState(() {
+            buttonColors[correctAnswerID] = [Colors.green, Colors.green];
+
+            buttonColors[givenAnswerID] = [Colors.red, Colors.red];
+        });
+        
     }
 
 }
