@@ -17,9 +17,16 @@ class User {
 
     User.fromSnapshot(DataSnapshot snapshot) {
         this.id = int.parse(snapshot.key);
-        this.name = snapshot.value["Name"];
+        this.name = snapshot.value["Username"];
         this.pwHash = snapshot.value["PwHash"];
         this.score = snapshot.value["Score"];
+    }
+
+    User.fromMap(Map<dynamic, dynamic> map) {
+        this.id = map["ID"];
+        this.name = map["Username"];
+        this.pwHash = map["PwHash"];
+        this.score = map["Score"];
     }
 
     static Future<User> getUser(int id) async {
@@ -29,6 +36,24 @@ class User {
 
         DataSnapshot snapshot = await userRef.reference().child(id.toString()).once();
         return new User.fromSnapshot(snapshot);
+    }
+
+    static Future<List<User>> getAllUsers() async {
+
+        DatabaseReference userRef = FirebaseDatabase.instance.reference().child('User');
+
+        DataSnapshot snapshot = await userRef.reference().once();
+
+        List<dynamic> users = snapshot.value;
+        List<User> userList = new List<User>();
+        
+        for (var u in users) {
+            if (u != null) {
+                userList.add(new User.fromMap(u));
+            }
+        }
+
+        return userList;
     }
 
 }
