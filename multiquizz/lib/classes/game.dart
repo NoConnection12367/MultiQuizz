@@ -60,7 +60,7 @@ class Game {
     static Future<List<Game>> getOpenGamesFromUser(int userID) async {
 
         DatabaseReference gameRef = FirebaseDatabase.instance.reference().child('Game');
-        dynamic snapshot = await gameRef.orderByChild('OpponentID').equalTo(userID).once();
+        DataSnapshot snapshot = await gameRef.orderByChild('OpponentID').equalTo(globals.activeUser.id).once();
 
         List<Game> games = new List<Game>();
 
@@ -112,6 +112,7 @@ class Game {
         gameRef.child(newID).child("CreatorID").set(globals.activeUser.id);
         gameRef.child(newID).child("OpponentID").set(opponent);
         gameRef.child(newID).child("IsFinished").set("false");
+        gameRef.child(newID).child("ID").set(numGames);
         gameRef.child(newID).child("StartDate").set(DateTime.now().toString());
         gameRef.child(newID).child("EndDate").set(DateTime.now().add(Duration(days: 7)).toString());
 

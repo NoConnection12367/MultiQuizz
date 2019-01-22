@@ -135,7 +135,7 @@ class _StartNewGamePage extends State<StartNewGamePage> {
         do {
             randomUserID = userList[_random.nextInt(userList.length)].id;
         }
-        while (randomUserID != globals.activeUser.id);
+        while (randomUserID == globals.activeUser.id);
 
         initNewGame(randomUserID);
     }
