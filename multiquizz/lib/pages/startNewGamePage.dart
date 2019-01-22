@@ -1,5 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:multiquizz/classes/game.dart';
 import 'package:multiquizz/classes/user.dart';
+import 'package:multiquizz/pages/questionPage.dart';
+import '../globals.dart' as globals;
 
 
 class StartNewGamePage extends StatefulWidget {
@@ -15,11 +20,15 @@ class _StartNewGamePage extends State<StartNewGamePage> {
 
     List<User> _friendsList = new List<User>();
 
+    _StartNewGamePage() {
+        refreshFriendsList();
+    }
+
     @override
     Widget build(BuildContext context) {
 
-        refreshFriendsList();
-
+        print("Starting to build startNewGame page..");
+        
         return new Scaffold(
             appBar: new AppBar(
               title: new Text('Create new game'),
@@ -90,7 +99,9 @@ class _StartNewGamePage extends State<StartNewGamePage> {
                                 fontSize: 17
                                 ),
                             ),
-                        onTap: () => initNewGame(),
+                        onTap: () { 
+                            initNewGame(_friendsList[index].id);
+                        },
                     ),
                 );
             },
@@ -105,11 +116,27 @@ class _StartNewGamePage extends State<StartNewGamePage> {
         });
     }
 
-    void initNewGame() {
+    void initNewGame(int opponentID) async {
+        Game newGame = await Game.createNewGame(opponentID);
 
+        // Launch questionpages
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => QuestionPage(game: newGame)),
+        );
     }
 
-    void initNewRandomGame() {
+    void initNewRandomGame() async {
 
+        final _random = new Random();
+        List<User> userList = await User.getAllUsers();
+
+        int randomUserID = -1;
+        do {
+            randomUserID = userList[_random.nextInt(userList.length)].id;
+        }
+        while (randomUserID != globals.activeUser.id);
+
+        initNewGame(randomUserID);
     }
 }
