@@ -128,7 +128,7 @@ class _MainMenuPage extends State<MainMenuPage> {
         Navigator.push(
             context,
             //MaterialPageRoute(builder: (context) => StatisticsPage()),
-            MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: 0, correctAnswerCount: 0,)),
+            MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: 0, correctAnswerCount: 0)),
 
         );
 }
@@ -173,7 +173,7 @@ class _MainMenuPage extends State<MainMenuPage> {
                         subtitle: Text(memberNames),
                         onTap: () => Navigator.push(
                             cntx,
-                            MaterialPageRoute(builder: (cntx) => QuestionPage(game: openGames[index])),
+                            MaterialPageRoute(builder: (cntx) => QuestionPage(game: openGames[index], questionID: 0, correctAnswerCount: 0)),
                         ),
                     ),
                 );
