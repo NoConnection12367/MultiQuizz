@@ -318,6 +318,7 @@ class _QuestionPageState extends State<QuestionPage> {
             else
             {
                 _countdownColor = Color.fromARGB(255, 255, 0, 0);
+                
             }
                 
         });
@@ -331,7 +332,7 @@ class _QuestionPageState extends State<QuestionPage> {
                 // correctAnswerResponse
                 rightAnswer(givenAnswerID);
 
-                if (questionID < 10) {
+                if (questionID < 9) {
                     Navigator.push(
                         context,
                         //MaterialPageRoute(builder: (context) => StatisticsPage()),
@@ -344,7 +345,7 @@ class _QuestionPageState extends State<QuestionPage> {
             else {
                 wrongAnswer(givenAnswerID);
                 
-                if (questionID < 10) {
+                if (questionID < 9) {
                     Navigator.push(
                         context,
                         //MaterialPageRoute(builder: (context) => StatisticsPage()),
