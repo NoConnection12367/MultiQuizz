@@ -57,6 +57,48 @@ class Game {
         return await fromSnapshot(snapshot);
     }
 
+    static Future<List<Game>> getOpenGamesFromUser(int userID) async {
+
+        DatabaseReference gameRef = FirebaseDatabase.instance.reference().child('Game');
+        dynamic snapshot = await gameRef.orderByChild('OpponentID').equalTo(userID).once();
+
+        List<Game> games = new List<Game>();
+
+        List vals = snapshot.value;
+
+        for (var val in vals) {
+
+            if (val != null && val["IsFinished"] == "false")
+            {
+                Game game = await Game.getGame(val["ID"]);
+                games.add(game);
+            }
+        }
+
+        return games;
+    }
+
+    static Future<List<Game>> getFinishedGamesFromUser(int userID) async {
+
+        DatabaseReference gameRef = FirebaseDatabase.instance.reference().child('Game');
+        dynamic snapshot = await gameRef.orderByChild('OpponentID').equalTo(userID).once();
+
+        List<Game> games = new List<Game>();
+
+        List vals = snapshot.value;
+
+        for (var val in vals) {
+
+            if (val != null && val["IsFinished"] == "true")
+            {
+                Game game = await Game.getGame(val["ID"]);
+                games.add(game);
+            }
+        }
+
+        return games;
+    }
+
     static Future<Game> createNewGame(int opponent) async {
         
         // Push new games data to the database

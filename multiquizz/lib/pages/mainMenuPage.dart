@@ -5,10 +5,31 @@ import 'gamePage.dart';
 import 'statisticsPage.dart';
 import '../classes/game.dart';
 import '../classes/user.dart';
-
 import 'questionPage.dart';
 
-class MainMenuPage extends StatelessWidget {
+import '../globals.dart' as globals;
+
+class MainMenuPage extends StatefulWidget {
+
+    MainMenuPage({Key key, this.title}) : super(key: key);
+
+    final String title;
+
+    @override
+    _MainMenuPage createState() => _MainMenuPage();
+}
+
+class _MainMenuPage extends State<MainMenuPage> {
+
+    List<Game> openGames = new List<Game>();
+    List<Game> finishedGames = new List<Game>();
+
+    _MainMenuPage() 
+    {
+        loadOpenGames();
+        loadFinishedGames();
+    }
+
     @override
     Widget build(BuildContext context) {
         return new Scaffold(
@@ -22,14 +43,15 @@ class MainMenuPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                     
-                    new Center(
-                        child: Container(
-                            padding: EdgeInsets.only(top: 20.0),
+                    Container(
+                        padding: EdgeInsets.fromLTRB(30, 20, 30, 30),
+                        child: new ButtonTheme(
+                            minWidth: double.infinity,
                             child: new RaisedButton(
+                            
                                 color: const Color(0xFF0099ed),
-                                child:
-                                new Text(
-                                "+ New Game",
+                                child: new Text(
+                                "Start new Game",
                                     style: new TextStyle(fontSize:16.0,
                                     color: const Color(0xFFffffff),
                                     fontWeight: FontWeight.w500,
@@ -43,24 +65,13 @@ class MainMenuPage extends StatelessWidget {
                                 }
                             ),
                         ),
-                    ),     
-/*
-                            new IconButton(
-                                color: const Color(0xFF0099ed),
-                                icon: Icon(const IconData(0xe0ba, fontFamily: 'MaterialIcons')),
-                                onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => StartNewGamePage()),
-                                    );
-                                }
-                            )*/
+                    ),  
                     new Container(
-                        padding: EdgeInsets.only(top: 20.0, left: 15.0),
-                        child: Text("Open Games",
+                        padding: EdgeInsets.fromLTRB(35, 0, 0, 10),
+                        child: Text("Open Games:",
                                 style: new TextStyle(fontSize: 20.0,
                                     color: const Color(0xFF000000),
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w500,
                                     fontFamily: "Roboto"
                                 ))
                     ),
@@ -69,11 +80,11 @@ class MainMenuPage extends StatelessWidget {
                     ),
 
                     new Container(
-                        padding: EdgeInsets.only(top: 20.0, left: 15.0),
-                        child: Text("Finished Games",
+                        padding: EdgeInsets.fromLTRB(35, 0, 0, 10),
+                        child: Text("Finished Games:",
                                 style: new TextStyle(fontSize: 20.0,
                                     color: const Color(0xFF000000),
-                                    fontWeight: FontWeight.w400,
+                                    fontWeight: FontWeight.w500,
                                     fontFamily: "Roboto"
                                 ))
                     ),
@@ -83,21 +94,24 @@ class MainMenuPage extends StatelessWidget {
 
                     new Center(
                         child: Container(
-                            padding: EdgeInsets.only(bottom: 10.0),
-                            child: new RaisedButton(
-                            color: const Color(0xFF0099ed),
-                            child:
-                                new Text(
-                                "Statistics",
-                                    style: new TextStyle(fontSize:16.0,
-                                    color: const Color(0xFFffffff),
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: "Roboto")
+                            padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
+                            child: new ButtonTheme(
+                                minWidth: double.infinity,
+                                child: new RaisedButton(
+                                    color: const Color(0xFF0099ed),
+                                    child:
+                                        new Text(
+                                        "Statistics",
+                                            style: new TextStyle(fontSize:16.0,
+                                            color: const Color(0xFFffffff),
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: "Roboto")
+                                        ),
+                                    onPressed: () {
+                                        initQuestionPage(context);
+                                        
+                                    }
                                 ),
-                                onPressed: () {
-                                    initQuestionPage(context);
-                                    
-                                }
                             ),
                         ),
                     )
@@ -119,13 +133,11 @@ class MainMenuPage extends StatelessWidget {
         );
 }
 
-    Widget genOpenGamesListView(){
-
-        // db-Entries aller offenen Spiele mit Namen der Spieler
-        List<Game> openGames = new List<Game>();
-        openGames.add(new Game());                  // später: get games from db
+    Widget genOpenGamesListView()
+    {
 
         return new ListView.builder(
+            padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
             itemCount: openGames.length,
             itemBuilder: (BuildContext cntx, int index) {
 
@@ -134,31 +146,47 @@ class MainMenuPage extends StatelessWidget {
                 for(User member in openGames[index].memberList)
                 {
                     if (memberNames == '') {
-                      memberNames = member.name;
+                        memberNames = member.name;
                     }
                     else
                         memberNames = memberNames + ', ' + member.name;
                 }
 
-                return new ListTile(
-                    title: Text(new DateFormat.yMMMd().format(new DateTime.now()).toString()),
-                    subtitle: Text(memberNames),
-                    onTap: () => Navigator.push(
-                        cntx,
-                        MaterialPageRoute(builder: (cntx) => GamePage(openGames[index].id)),
-                )
+                return new Container(
+                    decoration: new BoxDecoration (
+                        gradient: LinearGradient(
+                            // Where the linear gradient begins and ends
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            // Add one stop for each color. Stops should increase from 0 to 1
+                            stops: [0.2, 0.8],
+                            colors: [
+                                // Colors are easy thanks to Flutter's Colors class.
+                                Color.fromARGB(255, 240, 240, 240),
+                                Color.fromARGB(255, 220, 220, 220)
+                            ],
+                        ),
+                    ),
+                    child: ListTile(
+                        
+                        title: Text(new DateFormat.yMMMd().format(openGames[index].startTime)),
+                        subtitle: Text(memberNames),
+                        onTap: () => Navigator.push(
+                            cntx,
+                            MaterialPageRoute(builder: (cntx) => QuestionPage(game: openGames[index])),
+                        ),
+                    ),
                 );
+                
             },
         );
     }
 
-    Widget genFinishedGamesListView(){
-
-        // db-Entries aller offenen Spiele mit Namen der Spieler
-        List<Game> finishedGames = new List<Game>();
-        finishedGames.add(new Game());                  // später: get games from db
+    Widget genFinishedGamesListView()
+    {
 
         return new ListView.builder(
+            padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
             itemCount: finishedGames.length,
             itemBuilder: (BuildContext cntx, int index) {
 
@@ -173,15 +201,49 @@ class MainMenuPage extends StatelessWidget {
                         memberNames = memberNames + ', ' + member.name;
                 }
                 
-                return new ListTile(
-                    title: Text(new DateFormat.yMMMd().format(new DateTime.now()).toString()),
-                    subtitle: Text(memberNames),
-                    onTap: () => Navigator.push(
-                        cntx,
-                        MaterialPageRoute(builder: (cntx) => GamePage(finishedGames[index].id)),
-                )
+                return new Container(
+                    decoration: new BoxDecoration (
+                        gradient: LinearGradient(
+                            // Where the linear gradient begins and ends
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            // Add one stop for each color. Stops should increase from 0 to 1
+                            stops: [0.2, 0.8],
+                            colors: [
+                                // Colors are easy thanks to Flutter's Colors class.
+                                Color.fromARGB(255, 240, 240, 240),
+                                Color.fromARGB(255, 220, 220, 220)
+                            ],
+                        ),
+                    ),
+                    child: ListTile(
+                        title: Text(new DateFormat.yMMMd().format(finishedGames[index].startTime)),
+                        subtitle: Text(memberNames),
+                        onTap: () => Navigator.push(
+                            cntx,
+                            MaterialPageRoute(builder: (cntx) => GamePage(finishedGames[index].id)),
+                        )
+                    ),
                 );
             },
         );
+    }
+
+    void loadOpenGames() async
+    {
+        List<Game> games = await Game.getOpenGamesFromUser(globals.activeUser.id);
+
+        setState(() {
+            openGames = games;
+        });
+    }
+
+    void loadFinishedGames() async
+    {
+        List<Game> games = await Game.getFinishedGamesFromUser(globals.activeUser.id);
+
+        setState(() {
+            finishedGames = games;
+        });
     }
 }
