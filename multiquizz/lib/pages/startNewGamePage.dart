@@ -111,6 +111,10 @@ class _StartNewGamePage extends State<StartNewGamePage> {
 
     void refreshFriendsList() async {
         List<User> userNames = await User.getAllUsers();
+        User loggedInUser = userNames.firstWhere((x) => x.id == globals.activeUser.id);
+        if (loggedInUser != null) {
+          userNames.remove(loggedInUser);
+        }
 
         setState(() {
             _friendsList = userNames;
