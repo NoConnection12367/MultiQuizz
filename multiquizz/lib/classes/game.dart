@@ -133,6 +133,17 @@ class Game {
         return Game.getGame(numGames);
     }
 
+    static void updateGame(int gameID, int creatorRightAnswers, int opponentRightAnswers, bool isFinished) async
+    {
+        // Push new games data to the database
+        DatabaseReference gameRef = FirebaseDatabase.instance.reference().child('Game');
+
+        // Add new games properties to the database
+        await gameRef.child(gameID.toString()).child("CreatorRightAnswers").set(creatorRightAnswers);
+        await gameRef.child(gameID.toString()).child("OpponentRightAnswers").set(opponentRightAnswers);
+        await gameRef.child(gameID.toString()).child("IsFinished").set(isFinished.toString());
+    }
+
     static List<dynamic> tryConvertToList(dynamic listOrMap)
     {
         if (listOrMap is Map) {
