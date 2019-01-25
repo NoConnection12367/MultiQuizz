@@ -11,11 +11,12 @@ class QuestionPage extends StatefulWidget {
 	final Game game;
     final int questionID;
     final int correctAnswerCount;
+    final bool isNewGame;
 
-    QuestionPage({Key key, this.game, this.questionID, this.correctAnswerCount}) : super(key: key);
+    QuestionPage({Key key, this.game, this.questionID, this.correctAnswerCount, this.isNewGame}) : super(key: key);
 
     @override
-    _QuestionPageState createState() => _QuestionPageState(game, questionID, correctAnswerCount);
+    _QuestionPageState createState() => _QuestionPageState(game, questionID, correctAnswerCount, isNewGame);
 
     // wenn frage beantwortet -> rekursiv aufrufen, id + 1 bis id = 10
     
@@ -32,12 +33,14 @@ class _QuestionPageState extends State<QuestionPage> {
     Game game;
     int questionID;
     int correctAnswerCount;
+    bool isNewGame;
 
-	_QuestionPageState(Game game, int questionID, int correctAnswerCount){
+	_QuestionPageState(Game game, int questionID, int correctAnswerCount, bool isNewGame){
 
         this.game = game;
         this.questionID = questionID;
         this.correctAnswerCount = correctAnswerCount;
+        this.isNewGame = isNewGame;
 
 		//List<Question> questionList = game.questionList;
 	}
@@ -306,14 +309,14 @@ class _QuestionPageState extends State<QuestionPage> {
                             if (isGivenAnserCorrect == true) {
                                 Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: questionID + 1, correctAnswerCount: correctAnswerCount + 1)),
+                                    MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: questionID + 1, correctAnswerCount: correctAnswerCount + 1, isNewGame: isNewGame)),
                                     ModalRoute.withName('/mainMenu'),
                                 );
                             } 
                             else {
                                 Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: questionID + 1, correctAnswerCount: correctAnswerCount)),
+                                    MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: questionID + 1, correctAnswerCount: correctAnswerCount, isNewGame: isNewGame)),
                                     ModalRoute.withName('/mainMenu'),
                                 );
                             }
@@ -321,7 +324,14 @@ class _QuestionPageState extends State<QuestionPage> {
                         }
                         else
                         {
-                            update
+
+                            if (isNewGame == true) {
+                                game.updateGame(correctAnswerCount, 0, false);
+                            } 
+                            
+                            else {
+                                game.updateGame(game.creatorRightAnswers, correctAnswerCount, true);
+                            }
                             
                             Navigator.pushAndRemoveUntil(
                                 context,
