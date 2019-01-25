@@ -10,6 +10,9 @@ class Game {
     int id;
     var startTime;
     var endTime;
+    int creatorRightAnswers;
+    int opponentRightAnswers;
+    bool isFinished;
     User creator;
     User opponent;
     List<User> memberList = new List<User> ();
@@ -27,6 +30,8 @@ class Game {
         game.endTime = DateTime.parse(snapshot.value['EndDate']);
         game.creator = await User.getUser(snapshot.value["CreatorID"]);
         game.opponent = await User.getUser(snapshot.value["OpponentID"]);
+        game.creatorRightAnswers = await snapshot.value["CreatorRightAnswers"];
+        game.opponentRightAnswers = await snapshot.value["OpponentRightAnswers"];
 
         // Get members
         game.memberList = new List<User>();
@@ -133,15 +138,19 @@ class Game {
         return Game.getGame(numGames);
     }
 
-    static void updateGame(int gameID, int creatorRightAnswers, int opponentRightAnswers, bool isFinished) async
+    void updateGame(int creatorRightAnswers, int opponentRightAnswers, bool isFinished) async
     {
         // Push new games data to the database
         DatabaseReference gameRef = FirebaseDatabase.instance.reference().child('Game');
 
         // Add new games properties to the database
-        await gameRef.child(gameID.toString()).child("CreatorRightAnswers").set(creatorRightAnswers);
-        await gameRef.child(gameID.toString()).child("OpponentRightAnswers").set(opponentRightAnswers);
-        await gameRef.child(gameID.toString()).child("IsFinished").set(isFinished.toString());
+        await gameRef.child(this.id.toString()).child("CreatorRightAnswers").set(creatorRightAnswers);
+        await gameRef.child(this.id.toString()).child("OpponentRightAnswers").set(opponentRightAnswers);
+        await gameRef.child(this.id.toString()).child("IsFinished").set(isFinished.toString());
+
+        this.creatorRightAnswers = creatorRightAnswers;
+        this.opponentRightAnswers = opponentRightAnswers;
+        this.isFinished = isFinished;
     }
 
     static List<dynamic> tryConvertToList(dynamic listOrMap)
