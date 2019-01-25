@@ -64,9 +64,8 @@ class _StartGameButtonPage extends State<StartGameButtonPage> {
             // Launch questionpages
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => QuestionPage(game: newGame, questionID: 0, correctAnswerCount: 0,)),
+                MaterialPageRoute(builder: (context) => QuestionPage(game: newGame, questionID: 0, correctAnswerCount: 0, isNewGame: true)),
                 ModalRoute.withName('/mainMenu'),
-
             );
         }
         else
@@ -74,7 +73,7 @@ class _StartGameButtonPage extends State<StartGameButtonPage> {
             // Launch questionpages
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => QuestionPage(game: this.game, questionID: 0, correctAnswerCount: 0,)),
+                MaterialPageRoute(builder: (context) => QuestionPage(game: this.game, questionID: 0, correctAnswerCount: 0, isNewGame: false)),
                 ModalRoute.withName('/mainMenu'),
             );
         }
