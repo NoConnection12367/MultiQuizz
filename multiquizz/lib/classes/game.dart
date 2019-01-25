@@ -19,6 +19,7 @@ class Game {
 
     // Assemble game from a datasnapshot
     static Future<Game> fromSnapshot(DataSnapshot snapshot) async {
+
         // Init properties
         var game = new Game();
         game.id = int.parse(snapshot.key);
@@ -64,7 +65,7 @@ class Game {
 
         List<Game> games = new List<Game>();
 
-        List vals = snapshot.value;
+        List vals = tryConvertToList(snapshot.value);
 
         for (var val in vals) {
 
@@ -85,7 +86,7 @@ class Game {
 
         List<Game> games = new List<Game>();
 
-        List vals = snapshot.value;
+        List vals = tryConvertToList(snapshot.value);
 
         for (var val in vals) {
 
@@ -132,5 +133,24 @@ class Game {
         return Game.getGame(numGames);
     }
 
+    static List<dynamic> tryConvertToList(dynamic listOrMap)
+    {
+        if (listOrMap is Map) {
+            
+            List<Map> valMaps = new List<Map>();
+
+            Map<dynamic, dynamic> listOrMapMap = listOrMap;
+
+            for (var value in listOrMapMap.values) {
+                valMaps.add(value);
+            }
+
+            return valMaps;
+        }
+        else
+        {
+            return listOrMap;
+        }
+    }
     
 }
