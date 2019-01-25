@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../classes/game.dart';
 import 'package:html_unescape/html_unescape.dart';
+import 'gamePage.dart';
 
 
 class QuestionPage extends StatefulWidget {
@@ -44,6 +45,7 @@ class _QuestionPageState extends State<QuestionPage> {
 	double _progress = 1;
     int _counter = 30;
     Timer _timmy;
+    bool isAnswerGiven = false;
 	
     static List<Color> buttonColor1 = [Color.fromRGBO(150,150,150, 1), Color.fromRGBO(60,60,60, 1)];
     static List<Color> buttonColor2 = [Color.fromRGBO(150,150,150, 1), Color.fromRGBO(60,60,60, 1)];
@@ -316,8 +318,11 @@ class _QuestionPageState extends State<QuestionPage> {
             
             else
             {
+                _timmy.cancel();
                 _countdownColor = Color.fromARGB(255, 255, 0, 0);
                 _countdownBgColor = Color.fromARGB(255, 255, 0, 0);
+
+                markCorrectAnswer();
             }
                 
         });
@@ -327,7 +332,7 @@ class _QuestionPageState extends State<QuestionPage> {
 
         _timmy.cancel();
 
-        if (_timmy.isActive == true) {
+        if (isAnswerGiven == false) {
 
             if (givenAnswer == game.questionList[questionID].correctAnswer) {
                 // correctAnswerResponse
@@ -354,7 +359,12 @@ class _QuestionPageState extends State<QuestionPage> {
 
                     );
                 }
+                else
+                {
+                    //Navigator.of(context).pushReplacement(new MaterialPageRoute(settings: const RouteSettings(name: '/gamePage'), builder: (context) => new GamePage(game: game)));
+                }
             }
+            isAnswerGiven = true;
         }
     }
 
@@ -370,7 +380,7 @@ class _QuestionPageState extends State<QuestionPage> {
         // falsch gegebene Antwort rot färben
         int correctAnswerID;
 
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 4; i++){
             if (game.questionList[questionID].correctAnswer == game.questionList[questionID].answers[i]) {
                 correctAnswerID = i;
                 break;
@@ -379,10 +389,26 @@ class _QuestionPageState extends State<QuestionPage> {
 
         setState(() {
             buttonColors[correctAnswerID] = [Colors.green, Colors.green];
-
             buttonColors[givenAnswerID] = [Colors.red, Colors.red];
         });
         
+    }
+
+    void markCorrectAnswer(){
+        int correctAnswerID;
+
+        for(int i = 0; i < 4; i++){
+            if (game.questionList[questionID].correctAnswer == game.questionList[questionID].answers[i]) {
+                correctAnswerID = i;
+                break;
+            }
+        }
+
+        setState(() {
+            buttonColors[correctAnswerID] = [Colors.green, Colors.green];
+        });
+
+        isAnswerGiven = true;
     }
 
 }
