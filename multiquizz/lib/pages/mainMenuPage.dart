@@ -219,10 +219,10 @@ class _MainMenuPage extends State<MainMenuPage> {
                     child: ListTile(
                         title: Text(new DateFormat.yMMMd().format(finishedGames[index].startTime)),
                         subtitle: Text(memberNames),
-                        onTap: () => Navigator.push(
-                            cntx,
-                            MaterialPageRoute(builder: (cntx) => GamePage(finishedGames[index].id)),
-                        )
+                        // onTap: () => Navigator.push(
+                        //     cntx,
+                        //     MaterialPageRoute(builder: (cntx) => GamePage(finishedGames[index].id)),
+                        // )
                     ),
                 );
             },
