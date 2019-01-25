@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:multiquizz/pages/startGameButtonPage.dart';
 import 'startNewGamePage.dart';
 import 'gamePage.dart';
 import 'statisticsPage.dart';
@@ -173,7 +174,7 @@ class _MainMenuPage extends State<MainMenuPage> {
                         subtitle: Text(memberNames),
                         onTap: () => Navigator.push(
                             cntx,
-                            MaterialPageRoute(builder: (cntx) => QuestionPage(game: openGames[index], questionID: 0, correctAnswerCount: 0)),
+                            MaterialPageRoute(builder: (cntx) => StartGameButtonPage(game: openGames[index])),
                         ),
                     ),
                 );

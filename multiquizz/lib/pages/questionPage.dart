@@ -8,16 +8,11 @@ import 'package:html_unescape/html_unescape.dart';
 
 class QuestionPage extends StatefulWidget {
 
-	Game game;
-    int questionID;
-    int correctAnswerCount;
+	  final Game game;
+    final int questionID;
+    final int correctAnswerCount;
 
-    QuestionPage({Key key, Game game, int questionID, int correctAnswerCount}) : super(key: key)
-     {
-         this.game = game;
-         this.questionID = questionID;
-         this.correctAnswerCount = correctAnswerCount;
-     }
+    QuestionPage({Key key, this.game, this.questionID, this.correctAnswerCount}) : super(key: key);
 
     @override
     _QuestionPageState createState() => _QuestionPageState(game, questionID, correctAnswerCount);

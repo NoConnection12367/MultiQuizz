@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:multiquizz/classes/game.dart';
 import 'package:multiquizz/classes/user.dart';
 import 'package:multiquizz/pages/questionPage.dart';
+import 'package:multiquizz/pages/startGameButtonPage.dart';
 import '../globals.dart' as globals;
 
 
@@ -117,12 +118,11 @@ class _StartNewGamePage extends State<StartNewGamePage> {
     }
 
     void initNewGame(int opponentID) async {
-        Game newGame = await Game.createNewGame(opponentID);
 
-        // Launch questionpages
+        // Launch startNewGameButton page, push opponentID as parameter
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => QuestionPage(game: newGame, questionID: 0, correctAnswerCount: 0,)),
+            MaterialPageRoute(builder: (context) => StartGameButtonPage(opponentID: opponentID)),
         );
     }
 
