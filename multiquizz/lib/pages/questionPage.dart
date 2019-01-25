@@ -302,7 +302,7 @@ class _QuestionPageState extends State<QuestionPage> {
                         )
                     ],
                 ),
-                onTap: () {
+                onTap: () async {
                     if (isAnswerGiven == true) {
                         if (questionID < 9) {
 
@@ -326,11 +326,11 @@ class _QuestionPageState extends State<QuestionPage> {
                         {
 
                             if (isNewGame == true) {
-                                game.updateGame(correctAnswerCount, 0, false);
+                                await game.updateGame(correctAnswerCount, 0, false);
                             } 
                             
                             else {
-                                game.updateGame(game.creatorRightAnswers, correctAnswerCount, true);
+                                await game.updateGame(game.creatorRightAnswers, correctAnswerCount, true);
                             }
                             
                             Navigator.pushAndRemoveUntil(
@@ -373,11 +373,12 @@ class _QuestionPageState extends State<QuestionPage> {
 
     void getAnswer(String givenAnswer, int givenAnswerID){
 
+        var unescape = new HtmlUnescape();
         _timmy.cancel();
         
         if (isAnswerGiven == false) {
 
-            if (givenAnswer == game.questionList[questionID].correctAnswer)
+            if (givenAnswer == unescape.convert(game.questionList[questionID].correctAnswer))
                 rightAnswerResponse(givenAnswerID);
             
             else 
