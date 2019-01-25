@@ -46,6 +46,7 @@ class _QuestionPageState extends State<QuestionPage> {
     int _counter = 30;
     Timer _timmy;
     bool isAnswerGiven = false;
+    bool isGivenAnserCorrect = false;
 	
     static List<Color> buttonColor1 = [Color.fromRGBO(150,150,150, 1), Color.fromRGBO(60,60,60, 1)];
     static List<Color> buttonColor2 = [Color.fromRGBO(150,150,150, 1), Color.fromRGBO(60,60,60, 1)];
@@ -60,17 +61,17 @@ class _QuestionPageState extends State<QuestionPage> {
     @override
     Widget build(BuildContext context) {
 
-        if(_timmy == null || _timmy.isActive != true)
+        if((_timmy == null || _timmy.isActive != true) && isAnswerGiven == false)
         {
             _timmy = new Timer(Duration(seconds: 1), _countdown);
         }
         
         var unescape = new HtmlUnescape();
         String questionText = unescape.convert(game.questionList[questionID].questionText);
-        String answer1 = game.questionList[questionID].answers[0];
-        String answer2 = game.questionList[questionID].answers[1];
-        String answer3 = game.questionList[questionID].answers[2];
-        String answer4 = game.questionList[questionID].answers[3];
+        String answer1 = unescape.convert(game.questionList[questionID].answers[0]);
+        String answer2 = unescape.convert(game.questionList[questionID].answers[1]);
+        String answer3 = unescape.convert(game.questionList[questionID].answers[2]);
+        String answer4 = unescape.convert(game.questionList[questionID].answers[3]);
 
 
         return Scaffold(
@@ -79,225 +80,257 @@ class _QuestionPageState extends State<QuestionPage> {
                 // the App.build method, and use it to set our appbar title.
                 title: Text("Kategorie"),
             ),
-            body: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                            Expanded(
-                                child: Container(
-                                    padding: const EdgeInsets.all(10),
+            body: GestureDetector(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                                Expanded(
                                     child: Container(
-                                        padding: const EdgeInsets.only(left: 15, right: 15),
-                                        height: 200,
-										decoration: BoxDecoration(
-											border: Border.all(width: 1),
-											borderRadius: BorderRadius.all(Radius.circular(15)),
-											color: Color.fromARGB(30, 0, 0, 255)
-										), 
-                                        child: Row(
-                                            children: <Widget>[
-                                                Expanded(
-                                                    child: Text(
-                                                        questionText,
-                                                        style: TextStyle(
-                                                            fontSize: 22.0
+                                        padding: const EdgeInsets.all(10),
+                                        child: Container(
+                                            padding: const EdgeInsets.only(left: 15, right: 15),
+                                            height: 200,
+                                            decoration: BoxDecoration(
+                                                border: Border.all(width: 1),
+                                                borderRadius: BorderRadius.all(Radius.circular(15)),
+                                                color: Color.fromARGB(30, 0, 0, 255)
+                                            ), 
+                                            child: Row(
+                                                children: <Widget>[
+                                                    Expanded(
+                                                        child: Text(
+                                                            questionText,
+                                                            style: TextStyle(
+                                                                fontSize: 22.0
+                                                            ),
+                                                            textAlign: TextAlign.center,
                                                         ),
-                                                        textAlign: TextAlign.center,
-                                                    ),
-                                                )
-                                            ],
+                                                    )
+                                                ],
+                                            ),
                                         ),
                                     ),
+                                )
+                            ],
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                                
+                                LinearPercentIndicator(
+                                    width: MediaQuery.of(context).size.width - 50,
+                                    lineHeight: 20.0,
+                                    percent: _progress,
+                                    center: Text(_counter.toString()),
+                                    linearStrokeCap: LinearStrokeCap.roundAll,
+                                    progressColor: _countdownColor,
+                                    backgroundColor: _countdownBgColor,
                                 ),
-                            )
-                        ],
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                            
-							LinearPercentIndicator(
-								width: MediaQuery.of(context).size.width - 50,
-								lineHeight: 20.0,
-								percent: _progress,
-								center: Text(_counter.toString()),
-								linearStrokeCap: LinearStrokeCap.roundAll,
-								progressColor: _countdownColor,
-                                backgroundColor: _countdownBgColor,
-							),
-							
-							
-							
-							
-							/*Container(
-                                width: 150,
-                                padding: const EdgeInsets.all(15),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                                    color: _countdownColor,
-                                    border: Border.all(width: 1)
-                                ),
-                                child: Text(
-                                    _counter.toString(),
-                                    style: TextStyle(
-                                        fontSize: 30,
+                                
+                                
+                                
+                                
+                                /*Container(
+                                    width: 150,
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                                        color: _countdownColor,
+                                        border: Border.all(width: 1)
                                     ),
-                                    textAlign: TextAlign.center,
-                                ),
-                            )*/
-                        ],
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                            Expanded(
-                                child: Container(
-                                    padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+                                    child: Text(
+                                        _counter.toString(),
+                                        style: TextStyle(
+                                            fontSize: 30,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                    ),
+                                )*/
+                            ],
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                                Expanded(
                                     child: Container(
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(5)),
-											gradient: LinearGradient(
-												begin: Alignment.topCenter,
-												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
-												colors: buttonColors[0], // whitish to gray
-												tileMode: TileMode.repeated, // repeats the gradient over the canvas
-											),
-										),
-                                        child: RaisedButton(
-											color: const Color.fromARGB(0, 255, 255, 255),
-											child: Text(
-												answer1,
-												textAlign: TextAlign.center,
-												style: TextStyle(
-													fontSize: 18.0,
-													color: Colors.white
-												),
-											),
-											onPressed: (){
-                                                // übergeben gegebene Antworttext
-												getAnswer(answer1, 0);
-											},
-										)		
-                                    )
+                                        padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+                                        child: Container(
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
+                                                    colors: buttonColors[0], // whitish to gray
+                                                    tileMode: TileMode.repeated, // repeats the gradient over the canvas
+                                                ),
+                                            ),
+                                            child: RaisedButton(
+                                                color: const Color.fromARGB(0, 255, 255, 255),
+                                                child: Text(
+                                                    answer1,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        color: Colors.white
+                                                    ),
+                                                ),
+                                                onPressed: (){
+                                                    getAnswer(answer1, 0);
+                                                },
+                                            )		
+                                        )
+                                    ),
                                 ),
-                            ),
-                            Expanded(
-                                child: Container(
-                                    padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+                                Expanded(
                                     child: Container(
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(5)),
-											gradient: LinearGradient(
-												begin: Alignment.topCenter,
-												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
-												colors: buttonColors[1], // whitish to gray
-												tileMode: TileMode.repeated, // repeats the gradient over the canvas
-											),
-										),
-                                        child: RaisedButton(
-											color: const Color.fromARGB(0, 255, 255, 255),
-											child: Text(
-												answer2,
-												textAlign: TextAlign.center,
-												style: TextStyle(
-													fontSize: 18.0,
-													color: Colors.white
-												),
-											),
-											onPressed: (){
-                                                // übergeben gegebene Antworttext
-												getAnswer(answer2, 1);
-											},
-										)		
-                                    )
+                                        padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+                                        child: Container(
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
+                                                    colors: buttonColors[1], // whitish to gray
+                                                    tileMode: TileMode.repeated, // repeats the gradient over the canvas
+                                                ),
+                                            ),
+                                            child: RaisedButton(
+                                                color: const Color.fromARGB(0, 255, 255, 255),
+                                                child: Text(
+                                                    answer2,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        color: Colors.white
+                                                    ),
+                                                ),
+                                                onPressed: (){
+                                                    // übergeben gegebene Antworttext
+                                                    getAnswer(answer2, 1);
+                                                },
+                                            )		
+                                        )
+                                    ),
                                 ),
-                            ),
-                        ]
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                            Expanded(
-                                child: Container(
-                                    padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+                            ]
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                                Expanded(
                                     child: Container(
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(Radius.circular(5)),
-											gradient: LinearGradient(
-												begin: Alignment.topCenter,
-												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
-												colors: buttonColors[2], // whitish to gray
-												tileMode: TileMode.repeated, // repeats the gradient over the canvas
-											),
-										),
-                                        child: RaisedButton(
-											color: const Color.fromARGB(0, 255, 255, 255),
-											child: Text(
-												answer3,
-												textAlign: TextAlign.center,
-												style: TextStyle(
-													fontSize: 18.0,
-													color: Colors.white
-												),
-											),
-											onPressed: (){
-                                                // übergeben gegebene Antworttext
-												getAnswer(answer3, 2);
-											},
-										)		
-                                    )
+                                        padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+                                        child: Container(
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
+                                                    colors: buttonColors[2], // whitish to gray
+                                                    tileMode: TileMode.repeated, // repeats the gradient over the canvas
+                                                ),
+                                            ),
+                                            child: RaisedButton(
+                                                color: const Color.fromARGB(0, 255, 255, 255),
+                                                child: Text(
+                                                    answer3,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        color: Colors.white
+                                                    ),
+                                                ),
+                                                onPressed: (){
+                                                    // übergeben gegebene Antworttext
+                                                    getAnswer(answer3, 2);
+                                                },
+                                            )		
+                                        )
+                                    ),
                                 ),
-                            ),
-                            Expanded(
-                                child: Container(
-                                    padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+                                Expanded(
                                     child: Container(
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                        	borderRadius: BorderRadius.all(Radius.circular(5)),
-											gradient: LinearGradient(
-												begin: Alignment.topCenter,
-												end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
-												colors: buttonColors[3], // whitish to gray
-												tileMode: TileMode.repeated, // repeats the gradient over the canvas
-											),
-										),
-                                        child: RaisedButton(
-											color: const Color.fromARGB(0, 255, 255, 255),
-											child: Text(
-												answer4,
-												textAlign: TextAlign.center,
-												style: TextStyle(
-													fontSize: 18.0,
-													color: Colors.white
-												),
-											),
-											onPressed: (){
-                                                // übergeben gegebene Antworttext
-												getAnswer(answer4, 3);
-											},
-										)		
-                                    )
+                                        padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 10.0, right: 10.0),
+                                        child: Container(
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter, // 10% of the width, so there are ten blinds.
+                                                    colors: buttonColors[3], // whitish to gray
+                                                    tileMode: TileMode.repeated, // repeats the gradient over the canvas
+                                                ),
+                                            ),
+                                            child: RaisedButton(
+                                                color: const Color.fromARGB(0, 255, 255, 255),
+                                                child: Text(
+                                                    answer4,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 18.0,
+                                                        color: Colors.white
+                                                    ),
+                                                ),
+                                                onPressed: (){
+                                                    getAnswer(answer4, 3);
+                                                },
+                                            )		
+                                        )
+                                    ),
                                 ),
-                            ),
-                        ]
-                    )
-                ],
+                            ]
+                        )
+                    ],
+                ),
+                onTap: () {
+                    if (isAnswerGiven == true) {
+                        if (questionID < 9) {
+
+                            if (isGivenAnserCorrect == true) {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: questionID + 1, correctAnswerCount: correctAnswerCount + 1)),
+                                    ModalRoute.withName('/mainMenu'),
+                                );
+                            } 
+                            else {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: questionID + 1, correctAnswerCount: correctAnswerCount)),
+                                    ModalRoute.withName('/mainMenu'),
+                                );
+                            }
+                            
+                        }
+                        else
+                        {
+                            update
+                            
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(builder: (context) => GamePage(game)),
+                                ModalRoute.withName('/mainMenu'),
+                            );
+                        }
+                    }
+                },
             )
         );
 
@@ -331,52 +364,29 @@ class _QuestionPageState extends State<QuestionPage> {
     void getAnswer(String givenAnswer, int givenAnswerID){
 
         _timmy.cancel();
-
+        
         if (isAnswerGiven == false) {
 
-            if (givenAnswer == game.questionList[questionID].correctAnswer) {
-                // correctAnswerResponse
-                rightAnswer(givenAnswerID);
-
-                if (questionID < 9) {
-                    Navigator.push(
-                        context,
-                        //MaterialPageRoute(builder: (context) => StatisticsPage()),
-                        MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: questionID + 1, correctAnswerCount: correctAnswerCount + 1,)),
-
-                    );
-                }
-            } 
+            if (givenAnswer == game.questionList[questionID].correctAnswer)
+                rightAnswerResponse(givenAnswerID);
             
-            else {
-                wrongAnswer(givenAnswerID);
-                
-                if (questionID < 9) {
-                    Navigator.push(
-                        context,
-                        //MaterialPageRoute(builder: (context) => StatisticsPage()),
-                        MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: questionID + 1, correctAnswerCount: correctAnswerCount,)),
-
-                    );
-                }
-                else
-                {
-                    //Navigator.of(context).pushReplacement(new MaterialPageRoute(settings: const RouteSettings(name: '/gamePage'), builder: (context) => new GamePage(game: game)));
-                }
-            }
+            else 
+                wrongAnswerResponse(givenAnswerID);
+            
             isAnswerGiven = true;
         }
     }
 
-    void rightAnswer(int givenAnswerID){
-        // richtige Antwort grün blinken lassen
+    void rightAnswerResponse(int givenAnswerID){
+        // falsch gegebene Antwort grün färben
         setState(() {
             buttonColors[givenAnswerID] = [Colors.green, Colors.green];
+            isGivenAnserCorrect = true;
         });
         
     }
 
-    void wrongAnswer(int givenAnswerID){
+    void wrongAnswerResponse(int givenAnswerID){
         // falsch gegebene Antwort rot färben
         int correctAnswerID;
 
@@ -390,6 +400,7 @@ class _QuestionPageState extends State<QuestionPage> {
         setState(() {
             buttonColors[correctAnswerID] = [Colors.green, Colors.green];
             buttonColors[givenAnswerID] = [Colors.red, Colors.red];
+            isGivenAnserCorrect = false;
         });
         
     }

@@ -60,19 +60,22 @@ class _StartGameButtonPage extends State<StartGameButtonPage> {
         {
             // Init new game
             Game newGame = await Game.createNewGame(opponentID);
-
+            
             // Launch questionpages
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => QuestionPage(game: newGame, questionID: 0, correctAnswerCount: 0,)),
+                ModalRoute.withName('/mainMenu'),
+
             );
         }
         else
         {
             // Launch questionpages
-            Navigator.push(
+            Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => QuestionPage(game: this.game, questionID: 0, correctAnswerCount: 0,)),
+                ModalRoute.withName('/mainMenu'),
             );
         }
     }

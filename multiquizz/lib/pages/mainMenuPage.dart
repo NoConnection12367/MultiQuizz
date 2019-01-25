@@ -108,7 +108,8 @@ class _MainMenuPage extends State<MainMenuPage> {
                                             fontFamily: "Roboto")
                                         ),
                                     onPressed: () {
-                                        initQuestionPage(context);
+
+                                        // init StatisticPage()
                                         
                                     }
                                 ),
@@ -120,18 +121,6 @@ class _MainMenuPage extends State<MainMenuPage> {
             ),
         );
     }
-
-    void initQuestionPage(context) async
-    {
-        Game game = await Game.getGame(1);
-
-        Navigator.push(
-            context,
-            //MaterialPageRoute(builder: (context) => StatisticsPage()),
-            MaterialPageRoute(builder: (context) => QuestionPage(game: game, questionID: 0, correctAnswerCount: 0)),
-
-        );
-}
 
     Widget genOpenGamesListView()
     {
