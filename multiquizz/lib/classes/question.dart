@@ -1,7 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:math';
-import 'game.dart';
-import 'user.dart';
 
 class Question {
 

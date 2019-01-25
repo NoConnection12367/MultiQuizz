@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 
 class GamePage extends StatelessWidget {
 
-    int gameID;
+    final int gameID;
 
-    GamePage(int gameID)
-    {
-        this.gameID = gameID;
-    }
+    GamePage(this.gameID);
 
     @override
     Widget build(BuildContext context) {

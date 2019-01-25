@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:multiquizz/pages/startGameButtonPage.dart';
 import 'startNewGamePage.dart';
 import 'gamePage.dart';
-import 'statisticsPage.dart';
 import '../classes/game.dart';
 import '../classes/user.dart';
 import 'questionPage.dart';

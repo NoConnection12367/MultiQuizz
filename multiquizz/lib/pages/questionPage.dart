@@ -2,13 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../classes/game.dart';
-import '../classes/question.dart';
 import 'package:html_unescape/html_unescape.dart';
 
 
 class QuestionPage extends StatefulWidget {
 
-	  final Game game;
+	final Game game;
     final int questionID;
     final int correctAnswerCount;
 
@@ -54,6 +53,7 @@ class _QuestionPageState extends State<QuestionPage> {
 	List<List<Color>> buttonColors = [buttonColor1, buttonColor2, buttonColor3, buttonColor4];
 
     Color _countdownColor = Colors.green;
+    Color _countdownBgColor = Color(0xFFB8C7CB);
 
     @override
     Widget build(BuildContext context) {
@@ -62,8 +62,6 @@ class _QuestionPageState extends State<QuestionPage> {
         {
             _timmy = new Timer(Duration(seconds: 1), _countdown);
         }
-        else
-            _timmy.cancel();
         
         var unescape = new HtmlUnescape();
         String questionText = unescape.convert(game.questionList[questionID].questionText);
@@ -131,6 +129,7 @@ class _QuestionPageState extends State<QuestionPage> {
 								center: Text(_counter.toString()),
 								linearStrokeCap: LinearStrokeCap.roundAll,
 								progressColor: _countdownColor,
+                                backgroundColor: _countdownBgColor,
 							),
 							
 							
@@ -318,13 +317,15 @@ class _QuestionPageState extends State<QuestionPage> {
             else
             {
                 _countdownColor = Color.fromARGB(255, 255, 0, 0);
-                
+                _countdownBgColor = Color.fromARGB(255, 255, 0, 0);
             }
                 
         });
     }
 
     void getAnswer(String givenAnswer, int givenAnswerID){
+
+        _timmy.cancel();
 
         if (_timmy.isActive == true) {
 

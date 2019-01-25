@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:crypto/crypto.dart';
-import 'package:multiquizz/classes/game.dart';
 import 'package:multiquizz/pages/mainMenuPage.dart';
 import 'dart:convert'; // for the utf8.encode method
 import 'dart:async';
