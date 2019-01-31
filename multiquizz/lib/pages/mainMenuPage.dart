@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:multiquizz/pages/startGameButtonPage.dart';
+import 'package:multiquizz/pages/statisticsPage.dart';
 import 'startNewGamePage.dart';
 import 'gamePage.dart';
 import '../classes/game.dart';
@@ -43,31 +44,8 @@ class _MainMenuPage extends State<MainMenuPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                     
-                    Container(
-                        padding: EdgeInsets.fromLTRB(30, 20, 30, 30),
-                        child: new ButtonTheme(
-                            minWidth: double.infinity,
-                            child: new RaisedButton(
-                            
-                                color: const Color(0xFF0099ed),
-                                child: new Text(
-                                "Start new Game",
-                                    style: new TextStyle(fontSize:16.0,
-                                    color: const Color(0xFFffffff),
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: "Roboto")
-                                ),
-                                onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => StartNewGamePage()),
-                                    );
-                                }
-                            ),
-                        ),
-                    ),  
                     new Container(
-                        padding: EdgeInsets.fromLTRB(35, 0, 0, 10),
+                        padding: EdgeInsets.fromLTRB(35, 20, 0, 10),
                         child: Text("Open Games:",
                                 style: new TextStyle(fontSize: 20.0,
                                     color: const Color(0xFF000000),
@@ -91,31 +69,84 @@ class _MainMenuPage extends State<MainMenuPage> {
                     new Expanded(
                         child: genFinishedGamesListView(),
                     ),
-
-                    new Center(
-                        child: Container(
-                            padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-                            child: new ButtonTheme(
-                                minWidth: double.infinity,
-                                child: new RaisedButton(
-                                    color: const Color(0xFF0099ed),
-                                    child:
-                                        new Text(
-                                        "Statistics",
-                                            style: new TextStyle(fontSize:16.0,
-                                            color: const Color(0xFFffffff),
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: "Roboto")
-                                        ),
-                                    onPressed: () {
-
-                                        // init StatisticPage()
-                                        
-                                    }
+                    new Container(
+                        padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
+                        child: new ButtonTheme(
+                            height: 40,
+                            minWidth: double.infinity,
+                            child: new RaisedButton(
+                                
+                                color: const Color(0xFF0099ed),
+                                child: new Text(
+                                "Start new Game",
+                                    style: new TextStyle(fontSize:16.0,
+                                    color: const Color(0xFFffffff),
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: "Roboto")
                                 ),
+                                onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => StartNewGamePage()),
+                                    );
+                                }
                             ),
                         ),
-                    )
+                    ),  
+                    new Container(
+                        padding: EdgeInsets.fromLTRB(30, 10, 30, 20),
+                        child: new Row(
+                            children: <Widget>[
+                                new Container(
+                                    width: 175,
+                                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                    child: new ButtonTheme(
+                                        height: 40,
+                                        minWidth: double.infinity,
+                                        child: new RaisedButton(
+                                            color: const Color(0xFF0099ed),
+                                            child:
+                                                new Text(
+                                                "Statistics",
+                                                    style: new TextStyle(fontSize:16.0,
+                                                    color: const Color(0xFFffffff),
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily: "Roboto")
+                                                ),
+                                            onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(builder: (context) => StatisticsPage()),
+                                                );
+                                            }
+                                        ),
+                                    ),
+                                ),
+                                new Container(
+                                    width: 175,
+                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    child: new ButtonTheme(
+                                        height: 40,
+                                        minWidth: double.infinity,
+                                        child: new RaisedButton(
+                                            color: const Color(0xFF0099ed),
+                                            child:
+                                                new Text(
+                                                "Friendslist",
+                                                    style: new TextStyle(fontSize:16.0,
+                                                    color: const Color(0xFFffffff),
+                                                    fontWeight: FontWeight.w500,
+                                                    fontFamily: "Roboto")
+                                                ),
+                                            onPressed: () {
+
+                                            }
+                                        ),
+                                    ),
+                                ),
+                            ],
+                        ),
+                    ),
 
                 ]
             ),
