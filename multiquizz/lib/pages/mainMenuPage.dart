@@ -38,6 +38,21 @@ class _MainMenuPage extends State<MainMenuPage> {
             appBar: new AppBar(
                 title: new Text('MultiQuizz'),
                 actions: <Widget> [
+                    new RaisedButton(
+                    color: const Color(0xFF0099ed),
+                    child:
+                        new Text(
+                        "Reload",
+                            style: new TextStyle(fontSize:16.0,
+                            color: const Color(0xFFffffff),
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Roboto")
+                        ),
+                    onPressed: () {
+                        loadOpenGames();
+                        loadFinishedGames();
+                    }
+                ),
                 new RaisedButton(
                     color: const Color(0xFF0099ed),
                     child:
