@@ -70,15 +70,19 @@ class Game {
 
         List<Game> games = new List<Game>();
 
-        List vals = tryConvertToList(snapshot.value);
+        if (snapshot.value != null) {
 
-        for (var val in vals) {
+            List vals = tryConvertToList(snapshot.value);
 
-            if (val != null && val["IsFinished"] == "false")
-            {
-                Game game = await Game.getGame(val["ID"]);
-                games.add(game);
+            for (var val in vals) {
+
+                if (val != null && val["IsFinished"] == "false")
+                {
+                    Game game = await Game.getGame(val["ID"]);
+                    games.add(game);
+                }
             }
+
         }
 
         return games;
@@ -91,15 +95,18 @@ class Game {
 
         List<Game> games = new List<Game>();
 
-        List vals = tryConvertToList(snapshot.value);
+        if (snapshot.value != null) {
 
-        for (var val in vals) {
+          List vals = tryConvertToList(snapshot.value);
 
-            if (val != null && val["IsFinished"] == "true")
-            {
-                Game game = await Game.getGame(val["ID"]);
-                games.add(game);
-            }
+          for (var val in vals) {
+
+              if (val != null && val["IsFinished"] == "true")
+              {
+                  Game game = await Game.getGame(val["ID"]);
+                  games.add(game);
+              }
+          }
         }
 
         return games;
