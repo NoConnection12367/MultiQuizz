@@ -91,7 +91,7 @@ class Game {
     static Future<List<Game>> getFinishedGamesFromUser(int userID) async {
 
         DatabaseReference gameRef = FirebaseDatabase.instance.reference().child('Game');
-        dynamic snapshot = await gameRef.orderByChild('OpponentID').equalTo(userID).once();
+        dynamic snapshot = await gameRef.orderByChild('IsFinished').equalTo("true").once();
 
         List<Game> games = new List<Game>();
 
@@ -101,7 +101,7 @@ class Game {
 
           for (var val in vals) {
 
-              if (val != null && val["IsFinished"] == "true")
+              if (val != null && (val["CreatorID"] == userID || val["OpponentID"] == userID))
               {
                   Game game = await Game.getGame(val["ID"]);
                   games.add(game);
