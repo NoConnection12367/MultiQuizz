@@ -1,4 +1,8 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:multiquizz/pages/mainMenuPage.dart';
+import '../globals.dart' as globals;
+import '../classes/statistics.dart';
 
 class StatisticsPage extends StatefulWidget {
 
@@ -11,6 +15,14 @@ class StatisticsPage extends StatefulWidget {
 }
 
 class _StatisticsPage extends State<StatisticsPage> {
+
+    Statistics stats = new Statistics();
+
+    _StatisticsPage() {
+
+        loadStats();
+    }
+
     @override
     Widget build(BuildContext context) {
 
@@ -31,7 +43,7 @@ class _StatisticsPage extends State<StatisticsPage> {
 
         var statStyle = TextStyle(
             fontSize: 20,
-            fontWeight: FontWeight.w300,
+            fontWeight: FontWeight.w400,
         );
 
         return new Scaffold(
@@ -39,11 +51,11 @@ class _StatisticsPage extends State<StatisticsPage> {
                 title: new Text('MultiQuizz'),
             ),
             body: Container(
+                padding: const EdgeInsets.all(25),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                         new Container(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 25),
+                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 35),
                             child: new Row(
                                 children: <Widget>[
                                     Expanded(
@@ -57,7 +69,7 @@ class _StatisticsPage extends State<StatisticsPage> {
                                                     ),
                                                 ),
                                                 Text(
-                                                    "3",
+                                                    stats.wonGames.toString(),
                                                     style: pointStyle,
                                                 ),
                                             ],
@@ -80,7 +92,7 @@ class _StatisticsPage extends State<StatisticsPage> {
                                                     ),
                                                 ),
                                                 Text(
-                                                    "15",
+                                                    stats.lostGames.toString(),
                                                     style: pointStyle,
                                                 ),
                                             ],
@@ -89,26 +101,142 @@ class _StatisticsPage extends State<StatisticsPage> {
                                 ],
                             ),
                         ),
-                        new Expanded(
-                            child: Container(
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                        Text(
-                                            "Total games played:",
-                                            style: statStyle,
+                        Container(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: Column(
+                                children: <Widget>[
+                                    Container(
+                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                        child: Row(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 230,
+                                                    child: Text(
+                                                        "Total games played:",
+                                                        style: statStyle,
+                                                    ),
+                                                ),
+                                                Text(
+                                                    stats.totalGames.toString(),
+                                                    style: statStyle,
+                                                ),
+                                            ],
                                         ),
-                                        Text(
-                                            "Total right answers:",
-                                            style: statStyle,
+                                    ),
+                                    Container(
+                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                        child: Row(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 230,
+                                                    child: Text(
+                                                        "Total won games:",
+                                                        style: statStyle,
+                                                    ),
+                                                ),
+                                                Text(
+                                                    stats.wonGames.toString(),
+                                                    style: statStyle,
+                                                ),
+                                            ],
                                         ),
-                                        Text(
-                                            "Right answer probability:",
-                                            style: statStyle,
+                                    ),
+                                    Container(
+                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                        child: Row(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 230,
+                                                    child: Text(
+                                                        "Total lost games:",
+                                                        style: statStyle,
+                                                    ),
+                                                ),
+                                                Text(
+                                                    stats.lostGames.toString(),
+                                                    style: statStyle,
+                                                ),
+                                            ],
                                         ),
-                                    ],
-                                )
+                                    ),
+                                    Container(
+                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                        child: Row(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 230,
+                                                    child: Text(
+                                                        "Total draw games:",
+                                                        style: statStyle,
+                                                    ),
+                                                ),
+                                                Text(
+                                                    stats.drawGames.toString(),
+                                                    style: statStyle,
+                                                ),
+                                            ],
+                                        ),
+                                    ),
+                                    Container(
+                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                        child: Row(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 230,
+                                                    child: Text(
+                                                        "Total right answers:",
+                                                        style: statStyle,
+                                                    ),
+                                                ),
+                                                Text(
+                                                    stats.rightAnswers.toString(),
+                                                    style: statStyle,
+                                                ),
+                                            ],
+                                        ),
+                                    ),
+                                    Container(
+                                        child: Row(
+                                            children: <Widget>[
+                                                Container(
+                                                    width: 230,
+                                                    child: Text(
+                                                        "Right answer probability:",
+                                                        style: statStyle,
+                                                    ),
+                                                ),
+                                                Text(
+                                                    stats.getRightAnswerProbability().toStringAsFixed(0) + "%",
+                                                    style: statStyle,
+                                                ),
+                                                
+                                            ],
+                                        ),
+                                    ),
+                                ],
+                            )
+                        ),
+                        Expanded(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget> [
+                                    new ButtonTheme(
+                                        minWidth: double.infinity,
+                                        height: 60,
+                                        child: RaisedButton(
+                                            padding: const EdgeInsets.all(8.0),
+                                            textColor: Colors.white,
+                                            color: Colors.blue,
+                                            onPressed: () { mainMenuButtonPressed(context); },
+                                            child: new Text(
+                                                "Back to main menu >",
+                                                style: TextStyle(
+                                                    fontSize: 22
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ],
                             ),
                         ),
                     ],
@@ -116,6 +244,36 @@ class _StatisticsPage extends State<StatisticsPage> {
             ),
 
         );
+    }
+
+    void loadStats() async {
+
+        DatabaseReference gameRef = FirebaseDatabase.instance.reference().child('Statistics');
+        dynamic snapshot = await gameRef.child(globals.activeUser.id.toString()).once();
+
+        if (snapshot.value != null) {
+
+            Statistics stats = new Statistics();
+            stats.wonGames = snapshot.value["WonGames"];
+            stats.lostGames = snapshot.value["LostGames"];
+            stats.drawGames = snapshot.value["DrawGames"];
+            stats.rightAnswers = snapshot.value["RightAnswers"];
+            stats.totalGames = snapshot.value["TotalGames"];
+            stats.userID = snapshot.value["UserID"];
+
+            setState(() {
+                this.stats = stats;
+            });
+        }
+    }
+
+    void mainMenuButtonPressed(BuildContext context) {
+
+        Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => MainMenuPage()),
+                ModalRoute.withName('/mainMenu')
+            );
     }
 
 }
