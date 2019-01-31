@@ -242,7 +242,6 @@ class _MainMenuPage extends State<MainMenuPage> {
 
     Widget genFinishedGamesListView()
     {
-
         return new ListView.builder(
             padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
             itemCount: finishedGames.length,
