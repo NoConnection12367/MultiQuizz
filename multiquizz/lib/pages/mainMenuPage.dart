@@ -7,7 +7,7 @@ import 'startNewGamePage.dart';
 import 'gamePage.dart';
 import '../classes/game.dart';
 import '../classes/user.dart';
-import 'questionPage.dart';
+import 'friendsListPage.dart';
 
 import '../globals.dart' as globals;
 
