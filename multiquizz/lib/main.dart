@@ -24,9 +24,10 @@ class MyApp extends StatelessWidget {
                 // is not restarted.
                 primarySwatch: Colors.blue,
             ),
-            home: LoginPage(title: 'MultiQuizz - Hauptmenü'),
+            home: LoginPage(title: 'MultiQuizz'),
             routes: {
               "/mainMenu": (context) => MainMenuPage(),
+              "/login": (context) => LoginPage(title: 'MultiQuizz'),
             },
         );
     }

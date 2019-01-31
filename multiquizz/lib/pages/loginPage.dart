@@ -66,10 +66,11 @@ class _LoginPageState extends State<LoginPage> {
                             // Set global user, goto menu page
                             var test = user["ID"];
                             globals.activeUser = await User.getUser(test);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => MainMenuPage()),
-                            );
+                            Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => MainMenuPage()),
+                            ModalRoute.withName('/logout'),
+                        );
 
                         }
                         else {
