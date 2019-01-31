@@ -118,50 +118,52 @@ class _MainMenuPage extends State<MainMenuPage> {
                         padding: EdgeInsets.fromLTRB(30, 10, 30, 20),
                         child: new Row(
                             children: <Widget>[
-                                new Container(
-                                    width: 175,
-                                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                    child: new ButtonTheme(
-                                        height: 40,
-                                        minWidth: double.infinity,
-                                        child: new RaisedButton(
-                                            color: const Color(0xFF0099ed),
-                                            child:
-                                                new Text(
-                                                "Statistics",
-                                                    style: new TextStyle(fontSize:16.0,
-                                                    color: const Color(0xFFffffff),
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: "Roboto")
-                                                ),
-                                            onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(builder: (context) => StatisticsPage()),
-                                                );
-                                            }
+                                new Expanded(
+                                    child: new Container(
+                                        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                        child: new ButtonTheme(
+                                            height: 40,
+                                            minWidth: double.infinity,
+                                            child: new RaisedButton(
+                                                color: const Color(0xFF0099ed),
+                                                child:
+                                                    new Text(
+                                                    "Statistics",
+                                                        style: new TextStyle(fontSize:16.0,
+                                                        color: const Color(0xFFffffff),
+                                                        fontWeight: FontWeight.w500,
+                                                        fontFamily: "Roboto")
+                                                    ),
+                                                onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(builder: (context) => StatisticsPage()),
+                                                    );
+                                                }
+                                            ),
                                         ),
                                     ),
                                 ),
-                                new Container(
-                                    width: 175,
-                                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                                    child: new ButtonTheme(
-                                        height: 40,
-                                        minWidth: double.infinity,
-                                        child: new RaisedButton(
-                                            color: const Color(0xFF0099ed),
-                                            child:
-                                                new Text(
-                                                "Friendslist",
-                                                    style: new TextStyle(fontSize:16.0,
-                                                    color: const Color(0xFFffffff),
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: "Roboto")
-                                                ),
-                                            onPressed: () {
+                                new Expanded(
+                                    child: new Container(
+                                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                        child: new ButtonTheme(
+                                            height: 40,
+                                            minWidth: double.infinity,
+                                            child: new RaisedButton(
+                                                color: const Color(0xFF0099ed),
+                                                child:
+                                                    new Text(
+                                                    "Friendslist",
+                                                        style: new TextStyle(fontSize:16.0,
+                                                        color: const Color(0xFFffffff),
+                                                        fontWeight: FontWeight.w500,
+                                                        fontFamily: "Roboto")
+                                                    ),
+                                                onPressed: () {
 
-                                            }
+                                                }
+                                            ),
                                         ),
                                     ),
                                 ),
