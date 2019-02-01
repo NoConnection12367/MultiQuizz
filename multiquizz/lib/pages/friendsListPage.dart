@@ -156,7 +156,7 @@ class _FriendsListPage extends State<FriendsListPage> {
                         ),
                     ),
                     Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.only(bottom: 10, top: 10, left: 30),
                         child: new Text(addFriendResponse),
                     ),
                 ]
