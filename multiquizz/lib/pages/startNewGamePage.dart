@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:multiquizz/classes/game.dart';
 import 'package:multiquizz/classes/user.dart';
 import 'package:multiquizz/pages/questionPage.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:multiquizz/pages/startGameButtonPage.dart';
 import '../globals.dart' as globals;
 
@@ -22,7 +23,7 @@ class _StartNewGamePage extends State<StartNewGamePage> {
     List<User> _friendsList = new List<User>();
 
     _StartNewGamePage() {
-        refreshFriendsList();
+        refreshFriendsList(globals.activeUser.id);
     }
 
     @override
@@ -109,16 +110,46 @@ class _StartNewGamePage extends State<StartNewGamePage> {
         );
     }
 
-    void refreshFriendsList() async {
-        List<User> userNames = await User.getAllUsers();
-        User loggedInUser = userNames.firstWhere((x) => x.id == globals.activeUser.id);
-        if (loggedInUser != null) {
-          userNames.remove(loggedInUser);
+    static Future<List<User>> fromSnapshot(DataSnapshot snapshot) async {
+        List<User> friendslist = new List<User>();
+        List<int> friendslistIDs = new List<int>();
+
+        List list = Game.tryConvertToList(snapshot.value);
+
+        for(var item in list){
+            if (item != null) {
+                friendslistIDs.add(item['FriendID']);
+            }
         }
 
-        setState(() {
-            _friendsList = userNames;
-        });
+        for(var id in friendslistIDs){
+            User user = await User.getUser(id);
+
+            friendslist.add(user);
+        }   // nochmal checken wengen "FriendID"
+
+        return friendslist;
+    }
+
+    // Get a game from the database via its id
+    static Future<List<User>> getFutureFriendsList(int id) async {
+
+        // Get user with given ID from database
+        DatabaseReference gameRef = FirebaseDatabase.instance.reference().child('FriendsList');
+        DataSnapshot snapshot = await gameRef.reference().orderByChild('UserID').equalTo(id).once();
+
+        return await fromSnapshot(snapshot);
+    }
+
+    void refreshFriendsList(int id) async {
+
+        if (_friendsList != null) {
+            List<User> futureFriendslist = await getFutureFriendsList(id);
+
+            setState(() {
+                _friendsList = futureFriendslist;
+            });
+        }
     }
 
     void initNewGame(int opponentID) async {

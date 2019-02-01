@@ -325,6 +325,9 @@ class _QuestionPageState extends State<QuestionPage> {
                         }
                         else
                         {
+                            
+                            if (isGivenAnserCorrect == true)
+                                correctAnswerCount = correctAnswerCount + 1;
 
                             if (isNewGame == true) {
                                 await game.updateGame(correctAnswerCount, 0, false);

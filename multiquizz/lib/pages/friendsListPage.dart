@@ -17,6 +17,7 @@ class _FriendsListPage extends State<FriendsListPage> {
 
     List<String> friendslist = new List<String>();
     TextEditingController usernameController = new TextEditingController();
+    String addFriendResponse = "";
 
     _FriendsListPage(){
         getFriendsList(globals.activeUser.id);
@@ -45,9 +46,10 @@ class _FriendsListPage extends State<FriendsListPage> {
                         child: genFriendsListview(),
                     ),
                     new Container(
+                        padding: EdgeInsets.only(left: 30, right: 30),
                         child: Text("Add Friend:",
                             style: TextStyle(
-                                fontSize: 16,        
+                                fontSize: 18,        
                             ),
                         ),
                     ),
@@ -63,7 +65,7 @@ class _FriendsListPage extends State<FriendsListPage> {
                                 new Container(
                                     width: 300,
                                     height: 40,
-                                    padding: EdgeInsets.only(bottom: 30),
+                                    padding: EdgeInsets.only(bottom: 30, left: 30, right: 10),
                                     child: new TextField(
                                         controller: usernameController,
                                         style: new TextStyle(
@@ -74,8 +76,9 @@ class _FriendsListPage extends State<FriendsListPage> {
                                     ),
                                 ),
                                 new Container(
-                                    width: 45,
+                                    width: 75,
                                     height: 40,
+                                    padding: EdgeInsets.only(right: 30),
                                     child: new ButtonTheme(
                                         height: 40,
                                         minWidth: 40,
@@ -89,14 +92,72 @@ class _FriendsListPage extends State<FriendsListPage> {
                                                     fontFamily: "Roboto"
                                                 )
                                             ),
-                                            onPressed: () {
-                                                
+                                            onPressed: () async {
+                                                bool isFriendAdded = false;
+                                                bool isFriendExisting = true;
+                                                int friendID = -1;
+
+                                                List<User> allUsers = await User.getAllUsers();
+
+                                                // prüfe, ob man bereits befreundet ist
+                                                for(var friend in friendslist){
+                                                    if(friend == usernameController.text){
+                                                        isFriendAdded = true;
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (isFriendAdded == false) {
+                                                    // prüfe, ob der eingegebene User exisistiert
+                                                    for(var user in allUsers){
+                                                        if(user.name == usernameController.text){
+                                                            isFriendExisting = true;
+                                                            friendID = user.id;
+                                                            break;
+                                                        }
+
+                                                        setState(() {
+                                                            addFriendResponse = "User doesn't exist.";
+                                                        });
+                                                        
+                                                        isFriendExisting = false;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    setState(() {
+                                                        addFriendResponse = usernameController.text + " already has been added.";
+                                                    });
+                                                }
+
+                                                if(isFriendAdded == false && isFriendExisting == true){
+                                                    // Push new games data to the database
+                                                    DatabaseReference gameRef = FirebaseDatabase.instance.reference().child('FriendsList');
+
+                                                    DataSnapshot snapshot = await gameRef.reference().once();
+                                                    int numFriends = snapshot.value.length;
+
+                                                    var newID = numFriends.toString();
+                                                    // Add new games properties to the database
+                                                    await gameRef.child(newID).child("UserID").set(globals.activeUser.id);
+                                                    await gameRef.child(newID).child("FriendID").set(friendID);
+
+                                                    setState(() {
+                                                        addFriendResponse = usernameController.text + " has been added.";
+                                                    });
+
+                                                    getFriendsList(globals.activeUser.id);
+                                                }
                                             }
                                         ),
                                     ),
                                 )
                             ],
                         ),
+                    ),
+                    Container(
+                        padding: EdgeInsets.all(10),
+                        child: new Text(addFriendResponse),
                     ),
                 ]
             )
@@ -152,7 +213,20 @@ class _FriendsListPage extends State<FriendsListPage> {
                 itemCount: friendslist.length,
                 itemBuilder: (BuildContext cntx, int index) {
                     return new Container(
-                        height: 30,
+                        decoration: new BoxDecoration (
+                            gradient: LinearGradient(
+                                // Where the linear gradient begins and ends
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                // Add one stop for each color. Stops should increase from 0 to 1
+                                stops: [0.2, 0.8],
+                                colors: [
+                                    // Colors are easy thanks to Flutter's Colors class.
+                                    Color.fromARGB(255, 240, 240, 240),
+                                    Color.fromARGB(255, 220, 220, 220)
+                                ],
+                            ),
+                        ),
                         child: ListTile(
                             title: Text(friendslist[index]),
                         ),

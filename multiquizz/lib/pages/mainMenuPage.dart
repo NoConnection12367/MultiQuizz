@@ -176,7 +176,10 @@ class _MainMenuPage extends State<MainMenuPage> {
                                                         fontFamily: "Roboto")
                                                     ),
                                                 onPressed: () {
-
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(builder: (context) => FriendsListPage()),
+                                                    );
                                                 }
                                             ),
                                         ),
