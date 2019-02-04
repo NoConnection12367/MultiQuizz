@@ -25,17 +25,25 @@
 
 
 <h3>1. Einleitung</h3>
+<p>Als Thema für die Studienarbeit haben wir uns für eine Quizz App entschieden, bei der die Benutzer gegeneinander spielen können. Nutzer können dabei anhand des Nutzernamens zur Freundesliste hinzugefügt werden und daraufhin gegeneinander antreten.  Jedes Quiz beinhaltet zehn aufeinanderfolgende Fragen aus verschiedenen Kategorien. Hat der Ersteller des Spiels alle zehn Fragen beantwortet, kann der herausgeforderte Spieler antreten. Derjenige mit den meisten richtig beantworteten Fragen gewinnt.</p>
+<p>Die App ist dabei vollständig echtzeitfähig, da alle Daten über die Realtime Datenbank Firebase verwaltet werden. Auf den einzelnen Smartphones befinden sich dadurch keine Daten, alles ist Cloud-Synchronisiert.</p>
+<p>Den Datensatz für die Quizfragen haben wir von Open Trivia Database (https://opentdb.com/) übernommen und als JSON in unsere Datenbank hochgeladen. Da die Fragen nur in englischer Sprache verfügbar sind, haben wir uns dazu entschieden, die gesamte App in Englisch zu halten, um ein einheitliches Gesamtbild zu schaffen.
+</p>
 
 <h3>2. Benutzerführung</h3>
 <h4>2.1 Login</h4>
+<img src="/Screenshots/Screenshot_login_wrong.png" width="130" align="right">
+<img src="/Screenshots/Screenshot_login.png" width="130" align="right">
 <p>Direkt nach dem Start der App wird der Login Bildschirm angezeigt. Hier muss sich der Benutzer zunächst mit seinem Benutzernamen und Passwort anmelden. Bei einem Klick auf Login wird überprüft, ob der eingegebene Benutzername und das zugehörige Passwort in der Datenbank vorhanden sind.</p>
 <p>Die Passwörter werden hierbei als Hash gespeichert und übertragen, um die Passwörter vor Hacking Angriffen zu schützen. Als Hashfunktion kommt die derzeit sichere Funktion SHA-256 zum Einsatz.</p>
 <p>Ist die Kombination aus Benutzername und Passwort fehlerhaft, wird dies dem Benutzer durch Rotfärbung der Eingaben angezeigt.
 Stimmen Nutzername und Passwort überein, wird der Benutzer ins Hauptmenü der App weitergeleitet.</p>
 
 <h4>2.2 Hauptmenü</h4>
+<img src="/Screenshots/Screenshot_mainmenu.png" width="190" align="right">
 <h5>2.2.1 Offene Spiele</h5>
-<p>Im Hauptmenü wird dem Benutzer zunächst eine Liste der noch offenen Spiele angezeigt. Hier sind alle Spiele aufgelistet, die andere Spieler gestartet haben, und bei denen der Benutzer noch Fragen beantworten muss. Dabei wird zu jedem Spiel eine Liste der Mitspieler, sowie Zeit und Datum der Spielerstellung angezeigt. Mit einem Klick auf eines der gelisteten Spiele kann der Benutzer das Spiel starten.</p>
+<p>Im Hauptmenü wird dem Benutzer zunächst eine Liste der noch offenen Spiele angezeigt. Hier sind alle Spiele aufgelistet, die andere Spieler gestartet haben, und bei denen der Benutzer noch Fragen beantworten muss. Dabei wird zu jedem Spiel eine Liste der Mitspieler, sowie Zeit und Datum der Spielerstellung angezeigt. Mit einem Klick auf eines der gelisteten Spiele kann der Benutzer das Spiel starten.
+</p>
 
 <h5>2.2.2 Beendete Spiele</h5>
 <p>Weiter unten wird außerdem eine Liste mit fertig gestellten Spielen angezeigt. Hier werden alle Spiele aufgelistet, die bereits beendet sind, und an denen der Benutzer beteiligt war. So können auf einen Blick alle vorhandenen Spiele noch einmal eingesehen werden. Mit einem Klick auf eines der vergangenen Spiele wird die dazugehörige Spielübersicht mit weiteren Details angezeigt (siehe auch Punkt 2.5)</p>
@@ -48,6 +56,7 @@ Stimmen Nutzername und Passwort überein, wird der Benutzer ins Hauptmenü der A
 * Friendslist: Zeigt die Freundesliste des Spielers an
 
 <h4>2.3 Neues Spiel starten</h4>
+<img src="/Screenshots/Screenshot_new_game.png" width="150" align="right">
 <p>Um ein neues Spiel starten zu können, muss der Spieler zuerst einen Gegenspieler auswählen. Dazu hat er zwei Möglichkeiten:</p>
 
 * Am oberen Ende der Seite wird die Schaltfläche „Random Player“ angezeigt. So kann der Nutzer einfach ein Spiel gegen einen zufälligen Spieler starten. 
@@ -61,7 +70,10 @@ Stimmen Nutzername und Passwort überein, wird der Benutzer ins Hauptmenü der A
 <p>In der oberen Hälfte des Bildschirms wird die zu beantwortende Frage angezeigt. Darunter befindet sich ein Countdown, der beginnend von 30 Sekunden heruntergezählt wird. Erreicht der Timer den Wert 0, gilt die aktuelle Frage automatisch als falsch beantwortet, und der Spieler kann zur nächsten Frage wechseln.</p>
 <p>Im unteren Teil der Seite befinden sich vier Kacheln mit den jeweiligen Antwortmöglichkeiten. Der Spieler kann die vermeintlich richtige Antwort per Klick auswählen. Ist die Antwort korrekt, wird das jeweilige Feld grün gefärbt. Bei einer Falschantwort wird das ausgewählte Feld rot hinterlegt, zusätzlich wird durch Grünfärbung die richtige Antwort gezeigt.</p>
 <p>Mit einem Klick auf den Fragentext wird mit der nächsten Frage fortgefahren.</p>
-
+<img src="/Screenshots/Screenshot_question.png" width="190" align="left">
+<img src="/Screenshots/Screenshot_question_right.png" width="190" align="left">
+<img src="/Screenshots/Screenshot_question_wrong.png" width="190" align="left">
+<img src="/Screenshots/Screenshot_question_overtime.png" width="190">
 
 <h4>2.5 Spielübersicht</h4>
 <p>Auf dieser Seite werden genauere Details zum ausgewählten Spiel angezeigt. </p>
@@ -74,7 +86,12 @@ Stimmen Nutzername und Passwort überein, wird der Benutzer ins Hauptmenü der A
 
 <p>Weiter unten wird dann angezeigt, wie viele Punkte die beteiligten Spieler jeweils erzielt haben.
 Per Klick auf den Button „Back to main menu“ wird wieder zum Hauptmenü gewechselt.</p>
+<img src="/Screenshots/Screenshot_win.png" width="190" align="left">
+<img src="/Screenshots/Screenshot_draw.png" width="190" align="left">
+<img src="/Screenshots/Screenshot_lost.png" width="190" align="left">
+<img src="/Screenshots/Screenshot_pending.png" width="190">
 
+<img src="/Screenshots/Screenshot_stats.png" width="150" align="right">
 <h4>2.6 Statistiken</h4>
 <p>Hier werden Statistiken über alle bereits abgeschlossenen Spiele des Spielers dargestellt. </p>
 <p>Im oberen Bereich werden die Anzahlen aller bereits gewonnener und verlorener Spiele angezeigt. Darunter sind noch weitere interessante Statistiken aufgelistet, die da wären:</p>
@@ -84,7 +101,7 @@ Per Klick auf den Button „Back to main menu“ wird wieder zum Hauptmenü gewe
 * Anzahl aller richtig beantworteten Fragen
 * Trefferquote richtiger Antworten
 
-
+<br>
 <h4>2.7 Freundesliste</h4>
 <p>Auf dieser Seite werden alle bereits hinzugefügten Freunde angezeigt. Soll ein neuer Freund hinzugefügt werden, kann das über die Textbox am unteren Rand des Bildschirms gemacht werden. Dazu muss lediglich der Benutzername des hinzuzufügenden Spielers eingegeben werden. Mit einem Klick auf den „+“ Button wird der Spieler hinzugefügt und in der Liste angezeigt. Sollte es zu einem Fehler kommen (z.B. Benutzer existiert nicht oder wurde bereits hinzugefügt), so wird dies dem Benutzer direkt angezeigt.</p>
 <p>Die Freundesliste spielt außerdem beim Starten eines neuen Spiels eine Rolle. Hier hat man neben einem zufälligen Spiel die Möglichkeit, gegen einen bereits hinzugefügten Freund zu spielen, was den Spielspaß deutlich anhebt.</p>
@@ -103,6 +120,9 @@ Per Klick auf den Button „Back to main menu“ wird wieder zum Hauptmenü gewe
 
 
 <h4>3.2 Grundaufbau</h4>
+<img src="/Screenshots/Screenshot_file_tree.png" width="210" align="right">
+<p>Der Großteil des Codes befindet sich im „lib“ – Ordner des Projekts. Hier ist der Code nochmals in weitere Unterordner aufgeteilt, um eine übersichtliche Projektstruktur zu erhalten, und auch zukünftige Änderungen einfach zu gestalten. </p>
+
 <h5>3.2.1 Klassen</h5>
 <p>Im Ordner „Classes“ befinden sich zusätzliche Klassen, die für die Entwicklung benötigt wurden und meist Datenbankobjekte darstellen. Diese Klassen enthalten den Großteil des in Dart implementierten Hintergrundcodes. Dazu gehören neben den Spielen auch die Nutzer, die Fragen und die Statistiken. Die Klassen stellen jeweils zusätzlich noch Funktionen zur Verfügung, die geänderte Daten direkt in die Datenbank speichern bzw. auf Daten in der Datenbank zugreifen. So kann z.B. global die Methode User.getUser(ID) aufgerufen werden, die dann den Nutzer mit der angegebenen ID liefert. Durch diese Vorgehensweise konnten wir Codeduplizierungen verhindern und so die zukünftige Wartbarkeit deutlich verbessern. Selbiges trifft auch auf die anderen Klassen zu.</p>
 
