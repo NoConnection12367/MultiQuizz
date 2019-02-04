@@ -27,7 +27,7 @@ class _FriendsListPage extends State<FriendsListPage> {
     Widget build(BuildContext context) {
         return new Scaffold(
             appBar: new AppBar(
-                title: new Text('Statistics'),
+                title: new Text('Friendslist'),
             ),
             body:
             new ListView(
@@ -63,7 +63,7 @@ class _FriendsListPage extends State<FriendsListPage> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                                 new Container(
-                                    width: 300,
+                                    width: 250,
                                     height: 40,
                                     padding: EdgeInsets.only(bottom: 30, left: 30, right: 10),
                                     child: new TextField(
